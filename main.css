@@ -1,0 +1,98 @@
+
+body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+.container {
+            max-width: 400px;
+            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+button:hover {
+            background-color: #0056b3;
+        }
+.question-container {
+            margin-top: 40px;
+        }
+.question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+.answers {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 1fr 1fr;
+        }
+.answer-button {
+            padding: 15px;
+            background-color: #ddd;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+.answer-button:hover {
+            background-color: #bbb;
+        }
+.result {
+            margin-top: 20px;
+            font-size: 16px;
+            color: green;
+        }
+.hint-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #888;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+.hint-button:hover {
+            background-color: #666;
+        }
+.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+.final-screen {
+            margin-top: 40px;
+        }
+.prize {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+.restart-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+.restart-button:hover {
+            background-color: #45a049;
+        }
+    

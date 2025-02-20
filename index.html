@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кто хочет стать миллионером?</title>
+    <link rel="stylesheet" href="main.css" />
+    <script src="questions.js"></script>    
+</head>
+<body>
+<div class="container">
+    <h1>Кто хочет стать миллионером?</h1>
+    <button id="start-game">Начать игру</button>
+    <div class="game hidden">
+        <div class="question-container">
+            <p class="question"></p>
+            <div class="answers"></div>
+        </div>
+        <div class="hints">
+            <button class="hint-button" data-hint="friend">Звонок другу</button>
+            <button class="hint-button" data-hint="audience">Помощь зала</button>
+            <button class="hint-button" data-hint="5050">50/50</button>
+        </div>
+        <p class="result"></p>
+    </div>
+    <div class="final-screen hidden">
+        <p class="prize"></p>
+        <button class="restart-button">Начать заново</button>
+    </div>
+</div>
+<script>
+    
+    let currentQuestionIndex = 0;
+    let hintsUsed = [];
+    let totalPrize = 0;
+
+    document.getElementById('start-game').addEventListener('click', startGame);
+    document.querySelector('.restart-button').addEventListener('click', restartGame);
+
+    function startGame() {
+        document.querySelector('.container h1').textContent = 'Игра началась!';
+        document.getElementById('start-game').classList.add('hidden');
+        document.querySelector('.game').classList.remove('hidden');
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIndex >= questions.length) {
+            showFinalScreen();
+            return;
+        }
+
+        const question = questions[currentQuestionIndex];
+        document.querySelector('.question').textContent = question.question;
+        document.querySelector('.answers').innerHTML = '';
+
+        question.answers.forEach(answer => {
+            const button = document.createElement('button');
+            button.className = 'answer-button';
+            button.textContent = answer;
+            button.addEventListener('click', () => checkAnswer(answer));
+            document.querySelector('.answers').appendChild(button);
+        });
+
+        document.querySelector('.result').textContent = '';
+    }
+
+    function checkAnswer(answer) {
+        const question = questions[currentQuestionIndex];
+        if (answer === question.correctAnswer) {
+            document.querySelector('.result').textContent = 'Правильно!';
+            document.querySelector('.result').style.color = 'green';
+            totalPrize += question.prize;
+            currentQuestionIndex++;
+            setTimeout(nextQuestion, 1000);
+        } else {
+            document.querySelector('.result').textContent = 'Неправильно! Игра окончена.';
+            document.querySelector('.result').style.color = 'red';
+            showFinalScreen();
+        }
+    }
+
+    function useHint(hintType) {
+        if (hintsUsed.includes(hintType)) return;
+        hintsUsed.push(hintType);
+
+        const hintButtons = document.querySelectorAll('.hint-button');
+        for (let i = 0; i < hintButtons.length; i++) {
+            if (hintButtons[i].dataset.hint === hintType) {
+                hintButtons[i].classList.add('disabled');
+                break;
+            }
+        }
+
+        switch (hintType) {
+            case 'friend':
+                alert('Ваш друг говорит, что правильный ответ - ' + questions[currentQuestionIndex].correctAnswer);
+                break;
+            case 'audience':
+                alert('Большинство зрителей выбрали ответ: ' + questions[currentQuestionIndex].correctAnswer);
+                break;
+            case '5050':
+                removeTwoWrongAnswers();
+                break;
+        }
+    }
+
+    function removeTwoWrongAnswers() {
+        const question = questions[currentQuestionIndex];
+        const wrongAnswers = question.answers.filter(answer => answer !== question.correctAnswer);
+        const randomIndexes = Array.from({length: wrongAnswers.length}, (_, i) => i).sort(() => Math.random() - 0.5).slice(0, 2);
+
+        wrongAnswers.forEach((wrongAnswer, index) => {
+            if (randomIndexes.includes(index)) {
+                const buttons = document.querySelectorAll('.answer-button');
+                buttons.forEach(button => {
+                    if (button.textContent === wrongAnswer) {
+                        button.disabled = true;
+                        button.style.opacity = 0.5;
+                    }
+                });
+            }
+        });
+    }
+
+    function showFinalScreen() {
+        document.querySelector('.game').classList.add('hidden');
+        document.querySelector('.final-screen').classList.remove('hidden');
+        document.querySelector('.prize').textContent = `Вы выиграли ${totalPrize} рублей!`;
+    }
+
+    function restartGame() {
+        currentQuestionIndex = 0;
+        hintsUsed = [];
+        totalPrize = 0;
+        document.querySelector('.final-screen').classList.add('hidden');
+        document.querySelector('.container h1').textContent = 'Кто хочет стать миллионером?';
+        document.getElementById('start-game').classList.remove('hidden');
+    }
+
+    document.querySelectorAll('.hint-button').forEach(button => {
+        button.addEventListener('click', () => useHint(button.dataset.hint));
+    });
+</script>
+</body>
+</html>

@@ -8,10 +8,16 @@
     <script src="questions.js"></script>    
 </head>
 <body>
+<audio loop id="audioMain">
+    <source src="main-asia.mp3" type="audio/mpeg">    
+    Проигрывание музыки не поддерживается.
+</audio>
 <div class="container">
     <h1>Кто хочет стать миллионером?</h1>
     <button id="start-game">Начать игру</button>
     <div class="game hidden">
+        <button id="music-off">Выключить звук</button>        
+        <div style="margin-top: 20px;"><span id="timer"></span></div>
         <div class="question-container">
             <p class="question"></p>
             <div class="answers"></div>
@@ -29,22 +35,67 @@
     </div>
 </div>
 <script>
-    
-    let currentQuestionIndex = 0;
-    let hintsUsed = [];
-    let totalPrize = 0;
 
-    document.getElementById('start-game').addEventListener('click', startGame);
-    document.querySelector('.restart-button').addEventListener('click', restartGame);
+let currentQuestionIndex = 0;
+let hintsUsed = [];
+let totalPrize = 0;
+let isMusicPlay = true;
 
+let timerInterval = null;
+const SECONDS_FOR_ONE_QUESTION = 10;
+let audioMain = document.getElementById("audioMain");
+
+document.getElementById('start-game').addEventListener('click', startGame);
+document.getElementById('music-off').addEventListener('click', switchMusic);
+document.querySelector('.restart-button').addEventListener('click', restartGame);      
+document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
+       
     function startGame() {
         document.querySelector('.container h1').textContent = 'Игра началась!';
         document.getElementById('start-game').classList.add('hidden');
         document.querySelector('.game').classList.remove('hidden');
+        audioMain.volume = 0.2;
+        audioMain.play();       
         nextQuestion();
     }
+    function switchMusic() {
+        let button = document.getElementById('music-off');
+        if(isMusicPlay) {
+            audioMain.pause();
+            isMusicPlay = false;
+            button.textContent = "Включить звук";
+        } else {
+            audioMain.play();
+            isMusicPlay = true;
+            button.textContent = "Выключить звук";
+        }        
+    }
+
+    function startTimer() {
+        let timeLeft = SECONDS_FOR_ONE_QUESTION;                
+            if (!timerInterval) {
+                timerInterval = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        document.getElementById('timer').innerText = timeLeft;                        
+                    } else {
+                        resetTimerForNextQuestion()
+                        showFinalScreen(false)                        
+                    }
+                }, 1000);
+            }            
+        }
+    function resetTimerForNextQuestion() {        
+        document.getElementById('timer').innerText = SECONDS_FOR_ONE_QUESTION;
+        clearInterval(timerInterval);
+        timerInterval = null
+    }    
+
 
     function nextQuestion() {
+        document.querySelector('.container h1').textContent = 'Номер вопроса: '+ (currentQuestionIndex+1);        
+        resetTimerForNextQuestion()        
+        startTimer()
         if (currentQuestionIndex >= questions.length) {
             showFinalScreen();
             return;
@@ -123,10 +174,16 @@
         });
     }
 
-    function showFinalScreen() {
+    function showFinalScreen(isWin) {
+        audioMain.pause()
+        document.querySelector('.container h1').textContent = 'Конец игры';
+        let finalText = " ";
+        if(isWin) {
+            finalText = `Вы выиграли ${totalPrize} рублей!`
+        } else finalText = `Игра окончена. Вы проиграли`
         document.querySelector('.game').classList.add('hidden');
         document.querySelector('.final-screen').classList.remove('hidden');
-        document.querySelector('.prize').textContent = `Вы выиграли ${totalPrize} рублей!`;
+        document.querySelector('.prize').textContent = finalText;        
     }
 
     function restartGame() {

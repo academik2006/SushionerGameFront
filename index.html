@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кто хочет стать миллионером?</title>
+    <title>Большая Первомайская викторина от Суши Мастер</title>
     <link rel="stylesheet" href="main.css" />
     <script src="questions.js"></script>    
 </head>
@@ -12,8 +12,22 @@
     <source src="main-asia.mp3" type="audio/mpeg">    
     Проигрывание музыки не поддерживается.
 </audio>
+<div id="dialog" class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Поздравление!</h4>
+        </div>
+        <div id='modal-text' class="modal-body">
+            <p>Поздравляем! Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?</p>
+        </div>
+        <div class="modal-footer">
+            <button id="continue-game-btn" class="btn btn-primary">Продолжить игру</button>
+            <button id="claim-prize-btn" class="btn btn-success">Забрать приз</button>
+        </div>
+    </div>
+</div>
 <div class="container">
-    <h1>Кто хочет стать миллионером?</h1>
+    <h1>Большая Первомайская викторина от Суши Мастер</h1>
     <button id="start-game">Начать игру</button>
     <div class="game hidden">
         <button id="music-off">Выключить звук</button>        
@@ -23,8 +37,7 @@
             <div class="answers"></div>
         </div>
         <div class="hints">
-            <button class="hint-button" data-hint="friend">Звонок другу</button>
-            <button class="hint-button" data-hint="audience">Помощь зала</button>
+            <button class="hint-button" data-hint="friend">Спросить Мастера-Су</button>            
             <button class="hint-button" data-hint="5050">50/50</button>
         </div>
         <p class="result"></p>
@@ -41,6 +54,20 @@ let hintsUsed = [];
 let totalPrize = 0;
 let isMusicPlay = true;
 
+const friendHints = [
+    'Хм... Интересный вопрос. Мой внутренний компас указывает на ' + questions[currentQuestionIndex].correctAnswer + ', но... вдруг это ловушка? В общем, решай сам, я лишь скромный наблюдатель за звёздным небом.',
+    'Вероятнее всего, ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но я бы на твоём месте перепроверил всё трижды, а потом ещё раз. На всякий случай. Просто на всякий.',
+    'По моим расчётам (которые, конечно, могут быть слегка неточными), правильный ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но... я бы не стал на этом слишком настаивать. Вдруг это всё заговор?',
+    'Интуиция подсказывает мне ' + questions[currentQuestionIndex].correctAnswer + ', но интуиция – штука капризная. Вон, вчера она мне сказала, что дождь будет – а он, видите ли, не пошёл! Задумайся над этим…',
+    'Я вижу... я вижу... Ага! Ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Почти наверняка. Но... есть небольшое, совсем крошечное, едва уловимое сомнение...',
+    'Мой магический хрустальный шар (ну, обычный стеклянный, но звучит так круче) показывает ' + questions[currentQuestionIndex].correctAnswer + '. Однако, этот шар сегодня немного мутноват. Может, его протереть? Или всё-таки рискнуть?',
+    'Согласно древним свиткам (ну, на самом деле, я это в Википедии прочитал), правильный ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Однако, древние свитки часто ошибаются.',
+    'Звёзды намекают на ответ – ' + questions[currentQuestionIndex].correctAnswer + ', но я подозреваю, что это всего лишь планетарное выравнивание, которое не имеет отношения к викторине. Или имеет? Загадка!',
+    'Инстинкты кричат "' + questions[currentQuestionIndex].correctAnswer + '", но мои инстинкты часто ведут меня к холодильнику, а не к вершинам интеллекта. Сделай выводы.',
+    'Согласно моей тщательно разработанной системе (написанной на салфетке), ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но салфетка немного заляпана соусом терияки. Случайность? Не думаю...',
+    'Логика подсказывает ' + questions[currentQuestionIndex].correctAnswer + ', но логика – сухая наука. А жизнь прекрасна и многогранна. Как и выбор вариантов ответов.'
+];
+
 let timerInterval = null;
 const SECONDS_FOR_ONE_QUESTION = 30;
 let audioMain = document.getElementById("audioMain");
@@ -49,6 +76,15 @@ document.getElementById('start-game').addEventListener('click', startGame);
 document.getElementById('music-off').addEventListener('click', switchMusic);
 document.querySelector('.restart-button').addEventListener('click', restartGame);      
 document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
+document.getElementById("continue-game-btn").addEventListener("click", function () {
+    hideDialog(); // Скрыть диалог
+    continueGame(); // Продолжение игры
+});
+
+document.getElementById("claim-prize-btn").addEventListener("click", function () {
+    hideDialog(); // Скрыть диалог
+    claimPrize(); // Забирание приза
+});
        
     function startGame() {
         document.querySelector('.container h1').textContent = 'Игра началась!';
@@ -92,12 +128,27 @@ document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
     }    
 
 
-    function nextQuestion() {
+    function nextQuestion() {                
         document.querySelector('.container h1').textContent = 'Номер вопроса: '+ (currentQuestionIndex+1);        
         resetTimerForNextQuestion()        
+
+        switch (currentQuestionIndex) {
+            case 4:
+                let text4 = 'Поздравляем! Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?';
+                //alert(text4);
+                showDialog(text4);
+                break;           
+            case 8:
+                let text8 = 'Вау! Вторая несгораемая сумма – это круто! Но игра еще не окончена. Продолжаешь бороться за главный приз или заберешь награду?';
+                showDialog(text8);
+                break;            
+        }
+
+
+
         startTimer()
         if (currentQuestionIndex >= questions.length) {
-            showFinalScreen();
+            showFinalScreen(true);
             return;
         }
 
@@ -127,7 +178,7 @@ document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
         } else {
             document.querySelector('.result').textContent = 'Неправильно! Игра окончена.';
             document.querySelector('.result').style.color = 'red';
-            showFinalScreen();
+            showFinalScreen(false);
         }
     }
 
@@ -145,11 +196,9 @@ document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
 
         switch (hintType) {
             case 'friend':
-                alert('Ваш друг говорит, что правильный ответ - ' + questions[currentQuestionIndex].correctAnswer);
-                break;
-            case 'audience':
-                alert('Большинство зрителей выбрали ответ: ' + questions[currentQuestionIndex].correctAnswer);
-                break;
+                let randomHint = friendHints[Math.floor(Math.random() * friendHints.length)];
+                alert(randomHint);
+                break;           
             case '5050':
                 removeTwoWrongAnswers();
                 break;
@@ -184,6 +233,30 @@ document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
         document.querySelector('.game').classList.add('hidden');
         document.querySelector('.final-screen').classList.remove('hidden');
         document.querySelector('.prize').textContent = finalText;        
+    }
+
+    // Показ модального окна
+    function showDialog(text) {
+    document.getElementById("dialog").style.display = "block";
+    document.getElementById('modal-text').textContent = text;    
+    }
+
+// Скрытие модального окна
+    function hideDialog() {
+    document.getElementById("dialog").style.display = "none";
+    }
+
+// Функция продолжения игры
+    function continueGame() {
+    console.log("Игра продолжается!");
+    // Здесь добавляется логика продолжения игры
+    }
+
+// Функция забрания приза
+    function claimPrize() {
+    console.log("Приз получен!");
+    showFinalScreen(true)
+    // Здесь добавляется логика получения приза
     }
 
     function restartGame() {

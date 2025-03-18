@@ -129,11 +129,13 @@ button:hover {
 .modal-image {
     display: flex;    
     justify-content: center;    
-    width: 100vh; 
-    margin-top: 30px;
+    margin-top: 30px;    
+}
+
+.modal-image img {
     width: 256px;
-    height: 256px;
-    
+    height: 256px;    
+    margin: auto; /* Отцентрируем изображение внутри контейнера */
 }
 
 .modal-body {
@@ -144,6 +146,7 @@ button:hover {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-transform: uppercase;
     text-align: center;
+    line-height: 120%;
 }
 
 .modal-footer {

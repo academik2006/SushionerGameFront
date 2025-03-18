@@ -14,21 +14,34 @@
 </audio>
 <div id="dialog" class="modal-dialog">
     <div class="modal-content">
-        <div class="modal-header">
-            <p class="modal-title">Поздравление!</p>
+        <div id="modal-image-pic" class="modal-image">            
+            <img src="pic/level1_prize_cat.png" alt="modal_image_pic">
+        </div> 
+        <div id="modal-header-id" class="modal-header">
+            <p class="modal-title">Поздравлем!</p>
         </div>
         <div id='modal-text' class="modal-body">
-            <p>Поздравляем! Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?</p>
+            <p> Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?</p>
         </div>
-        <div class="modal-footer">
-            <button id="continue-game-btn" class="btn btn-primary">Продолжить игру</button>
-            <button id="claim-prize-btn" class="btn btn-success">Забрать приз</button>
+        <div id = "modal-footer-bronze-silver" class="modal-footer">
+            <button type="button" id="btn-modal-dialog-take-prize-bronze-silver" class="btn-modal-dialog-take-prize">
+                <img src="pic/gift.png" alt="Icon" class="icon" style="width: 40px; height: 40px;">
+                <div class="btn-modal-dialog-take-prize-text">Приз</div>
+            </button>           
+            <button id="continue-game-btn" class="btn-modal-dialog-continue">Продолжить</button>
         </div>
+        <div class="modal-footer-gold hidden">
+            <button type="button" id="btn-modal-dialog-take-prize-gold" class="btn-modal-dialog-take-prize-gold">
+                <img src="pic/gift.png" alt="Icon" class="icon" style="width: 40px; height: 40px;">
+                <div class="btn-modal-dialog-take-prize-text">Забрать главный приз</div>
+            </button>                       
+        </div>
+        
     </div>
 </div>
 <div id="mistersuhint" class="mistersu-dialog">
     <div class="mistersu-content">
-        <div id="mistersu-image" class="modal-image">
+        <div id="mistersu-image" class="modal-image">            
             <img src="pic/mister_су_pic.png" alt="mister_су_pic">
         </div>       
         <div class="mistersu-header">
@@ -37,7 +50,10 @@
         <div id="mistersu-hint-text" class="modal-body">
             <p>Текст подсказки</p>
         </div>
-        <div class="modal-footer">
+        <!-- <div id="palki" class="modal-palki">
+            <img src="pic/palki.png" alt="palki_pic">
+        </div>    -->
+        <div class="modal-footer">            
             <button id="return-game-button" class="btn-modal-dialog">Вернуться к игре</button>            
         </div>
     </div>
@@ -70,6 +86,10 @@ let hintsUsed = [];
 let totalPrize = 0;
 let isMusicPlay = true;
 
+const bronzeLevel = 'BRONZE';
+const silverLevel = 'SILVER';
+const goldLevel = 'GOLD';
+
 const friendHints = [
     'Хм... Интересный вопрос. Мой внутренний компас указывает на ' + questions[currentQuestionIndex].correctAnswer + ', но... вдруг это ловушка? В общем, решай сам, я лишь скромный наблюдатель за звёздным небом.',
     'Вероятнее всего, ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но я бы на твоём месте перепроверил всё трижды, а потом ещё раз. На всякий случай. Просто на всякий.',
@@ -93,16 +113,19 @@ document.getElementById('music-off').addEventListener('click', switchMusic);
 document.querySelector('.restart-button').addEventListener('click', restartGame);      
 document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
 document.getElementById("continue-game-btn").addEventListener("click", function () {
-    console.log('Нажата кнопка продолжить игру');
     hideDialog(); // Скрыть диалог
     continueGame(); // Продолжение игры
 });
-document.getElementById("claim-prize-btn").addEventListener("click", function () {
+document.getElementById("btn-modal-dialog-take-prize-bronze-silver").addEventListener("click", function () {
+    hideDialog(); // Скрыть диалог
+    claimPrize(); // Забирание приза
+});
+document.getElementById("btn-modal-dialog-take-prize-gold").addEventListener("click", function () {
     hideDialog(); // Скрыть диалог
     claimPrize(); // Забирание приза
 });
 document.getElementById("return-game-button").addEventListener("click", function () {
-    hideDialog(); // Скрыть диалог    
+    continueGame()
 });
        
     function startGame() {
@@ -153,14 +176,14 @@ document.getElementById("return-game-button").addEventListener("click", function
 
         switch (currentQuestionIndex) {
             case 4:
-                let text4 = 'Поздравляем! Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?';
-                //alert(text4);
-                showDialog(text4);
+                showModalDialog(bronzeLevel)                
                 break;           
-            case 8:
-                let text8 = 'Вау! Вторая несгораемая сумма – это круто! Но игра еще не окончена. Продолжаешь бороться за главный приз или заберешь награду?';
-                showDialog(text8);
-                break;            
+            case 8:                
+                showModalDialog(silverLevel)
+                break; 
+            case 10:
+                showModalDialog(goldLevel)
+                break;               
         }
 
 
@@ -254,9 +277,35 @@ document.getElementById("return-game-button").addEventListener("click", function
     }
 
     // Показ модального окна
-    function showDialog(text) {
+    function showModalDialog(level) {
+
     document.getElementById("dialog").style.display = "block";
-    document.getElementById('modal-text').textContent = text;    
+        switch (level) {
+            case bronzeLevel:
+            let text4 = 'Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?';                                
+            document.getElementById('modal-header-id').textContent = 'Поздравляем!'
+            document.getElementById('modal-text').textContent = text4; 
+            document.getElementById('modal-image-pic').src = "pic/level1_prize_cat.png";
+                
+                break;           
+            case silverLevel:
+            let text8 = 'Вторая несгораемая сумма – это круто! Но игра еще не окончена. Продолжаешь бороться за главный приз или заберешь награду?';                
+            document.getElementById('modal-header-id').textContent = 'Вау!'
+            document.getElementById('modal-text').textContent = text8; 
+            document.getElementById('modal-image-pic').src = "pic/level2_prize_cat.png";
+                break;
+            case goldLevel:
+            document.querySelector('.modal-footer').classList.add('hidden');
+            document.querySelector('.modal-footer-gold').classList.remove('hidden');
+            let text10 = 'Ты ответил на все вопросы и выиграл 10 000 баллов! Перед тобой преклоняются все гуру пикников, повелители дач и грозы субботников ;)';                
+            document.getElementById('modal-header-id').textContent = 'Победа!'
+            document.getElementById('modal-text').textContent = text10; 
+            document.getElementById('modal-image-pic').src = "pic/level3_prize_cat";    
+                
+                break;    
+        }
+
+       
     }
 
     //Показ подсказки места Су
@@ -274,8 +323,9 @@ document.getElementById("return-game-button").addEventListener("click", function
 
 // Функция продолжения игры
     function continueGame() {
-    console.log("Игра продолжается!");
-    // Здесь добавляется логика продолжения игры
+        hideDialog(); // Скрыть диалог            
+        currentQuestionIndex++;
+        nextQuestion()
     }
 
 // Функция забрания приза

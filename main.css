@@ -8,10 +8,11 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100vh;            
         }
-.container {
-            max-width: 400px;
+.container {            
+            width: 375px; 
+            height: 734px;
             text-align: center;
             background-color: white;
             padding: 30px;
@@ -102,6 +103,8 @@ button:hover {
 .modal-dialog {
     display: none; /* Скрываем диалог по умолчанию */
     position: fixed;
+    width: 375px; 
+    height: 734px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -110,6 +113,11 @@ button:hover {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+
+    background-image: url('pic/green_bg.jpg'); /* Путь к изображению */
+    background-size: 100% 100%; /* Масштабируем изображение, чтобы оно занимало весь контейнер */
+    background-position: center; /* Центруем изображение */
+    background-repeat: no-repeat; /* Изображение не повторяется */
 }
 
 .modal-header h4 {
@@ -138,6 +146,17 @@ button:hover {
     margin: auto; /* Отцентрируем изображение внутри контейнера */
 }
 
+.modal-palki {
+    display: flex;    
+    justify-content: center;        
+}
+
+.modal-palki img {
+    width: 158px;
+    height: 157px;        
+}
+
+
 .modal-body {
     margin-top: 10px;
     font-size: 18px;
@@ -152,7 +171,7 @@ button:hover {
 .modal-footer {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 .mistersu-dialog {
@@ -167,7 +186,7 @@ button:hover {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-    background-image: url('/pic/bg_blue.jpg'); /* Путь к изображению */
+    background-image: url('pic/bg_blue.jpg'); /* Путь к изображению */
     background-size: 100% 100%; /* Масштабируем изображение, чтобы оно занимало весь контейнер */
     background-position: center; /* Центруем изображение */
     background-repeat: no-repeat; /* Изображение не повторяется */
@@ -189,6 +208,59 @@ button:hover {
     background-color: #28A745;
     color: white;
 }
+
+.btn-modal-dialog-continue {
+    margin-top: 30px;
+    width: 181px;
+    height: 64px;
+    border: 2px solid #2B2A29; /* Добавлен стиль границы */
+    border-radius: 50px;
+    background-color: #517709;
+    font-size: 18px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;    
+}
+
+.btn-modal-dialog-take-prize {
+    display: flex; /* Активируем Flexbox */
+    margin-top: 30px;
+    width: 140px;
+    height: 64px;
+    border: 2px solid #2B2A29; /* Добавлен стиль границы */
+    border-radius: 50px;
+    background-color: #F04F23;
+    font-size: 18px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;    
+}
+
+.btn-modal-dialog-take-prize-gold {
+    display: flex; /* Активируем Flexbox */
+    margin-top: 30px;
+    width: 294px;
+    height: 64px;
+    border: 2px solid #2B2A29; /* Добавлен стиль границы */
+    border-radius: 50px;
+    background-color: #F04F23;
+    font-size: 18px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;    
+}
+
+.icon {
+    margin-right: 10px; /* Небольшой отступ между иконкой и текстом */
+}
+
+.btn-modal-dialog-take-prize-text {
+    display: flex;               /* Включаем Flexbox */
+    justify-content: center;     /* Горизонтально центрируем текст */
+    align-items: center;         /* Вертикально центрируем текст */
+    height: 100%;               /* Устанавливаем высоту контейнера */        
+}
+
 
 .btn-modal-dialog {
     margin-top: 30px;

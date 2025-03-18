@@ -14,11 +14,11 @@
 </audio>
 <div id="dialog" class="modal-dialog">
     <div class="modal-content">
-        <div id="modal-image-pic" class="modal-image">            
-            <img src="pic/level1_prize_cat.png" alt="modal_image_pic">
+        <div class="modal-image">            
+            <img id="modal-image-pic" src="pic/level1_prize_cat.png" alt="modal_image_pic">
         </div> 
-        <div id="modal-header-id" class="modal-header">
-            <p class="modal-title">Поздравлем!</p>
+        <div id="modal-header-id" class="modal-title">
+            <p>Поздравлем!</p>
         </div>
         <div id='modal-text' class="modal-body">
             <p> Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?</p>
@@ -44,8 +44,8 @@
         <div id="mistersu-image" class="modal-image">            
             <img src="pic/mister_су_pic.png" alt="mister_су_pic">
         </div>       
-        <div class="mistersu-header">
-            <p class="modal-title">ПОДСКАЗКА МИСТЕРА СУ</p>
+        <div class="modal-title">
+            <p>ПОДСКАЗКА МИСТЕРА СУ</p>
         </div>        
         <div id="mistersu-hint-text" class="modal-body">
             <p>Текст подсказки</p>
@@ -170,10 +170,11 @@ document.getElementById("return-game-button").addEventListener("click", function
     }    
 
 
-    function nextQuestion() {                
+    function nextQuestion() {        
+        
         document.querySelector('.container h1').textContent = 'Номер вопроса: '+ (currentQuestionIndex+1);        
-        resetTimerForNextQuestion()        
-
+        resetTimerForNextQuestion()  
+        
         switch (currentQuestionIndex) {
             case 4:
                 showModalDialog(bronzeLevel)                
@@ -238,7 +239,7 @@ document.getElementById("return-game-button").addEventListener("click", function
 
         switch (hintType) {
             case 'friend':
-                showMisterSuHint()                
+                showMisterSuHint();                
                 break;           
             case '5050':
                 removeTwoWrongAnswers();
@@ -279,29 +280,29 @@ document.getElementById("return-game-button").addEventListener("click", function
     // Показ модального окна
     function showModalDialog(level) {
 
-    document.getElementById("dialog").style.display = "block";
+        let textHeaderElement = document.getElementById('modal-header-id');
+        let modalTextElement = document.getElementById('modal-text');
+        let modalImage = document.getElementById('modal-image-pic');
+        document.getElementById("dialog").style.display = "block";
+
         switch (level) {
             case bronzeLevel:
-            let text4 = 'Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?';                                
-            document.getElementById('modal-header-id').textContent = 'Поздравляем!'
-            document.getElementById('modal-text').textContent = text4; 
-            document.getElementById('modal-image-pic').src = "pic/level1_prize_cat.png";
-                
+            textHeaderElement.textContent = 'Поздравляем!';
+            modalTextElement.textContent = 'Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?';
+            modalImage.src = 'pic/level1_prize_cat.png';                
                 break;           
-            case silverLevel:
-            let text8 = 'Вторая несгораемая сумма – это круто! Но игра еще не окончена. Продолжаешь бороться за главный приз или заберешь награду?';                
-            document.getElementById('modal-header-id').textContent = 'Вау!'
-            document.getElementById('modal-text').textContent = text8; 
-            document.getElementById('modal-image-pic').src = "pic/level2_prize_cat.png";
+            case silverLevel:            
+            textHeaderElement.textContent = 'Вау!';
+            modalTextElement.textContent = 'Вторая несгораемая сумма – это круто! Но игра еще не окончена. Продолжаешь бороться за главный приз или заберешь награду?';                
+            modalImage.src = 'pic/level2_prize_cat.png';
                 break;
             case goldLevel:
             document.querySelector('.modal-footer').classList.add('hidden');
             document.querySelector('.modal-footer-gold').classList.remove('hidden');
-            let text10 = 'Ты ответил на все вопросы и выиграл 10 000 баллов! Перед тобой преклоняются все гуру пикников, повелители дач и грозы субботников ;)';                
-            document.getElementById('modal-header-id').textContent = 'Победа!'
-            document.getElementById('modal-text').textContent = text10; 
-            document.getElementById('modal-image-pic').src = "pic/level3_prize_cat";    
-                
+
+            textHeaderElement.textContent = 'Победа!';
+            modalTextElement.textContent = 'Ты ответил на все вопросы и выиграл 10 000 баллов! Перед тобой преклоняются все гуру пикников, повелители дач и грозы субботников ;)';
+            modalImage.src = 'pic/level3_prize_cat';                    
                 break;    
         }
 
@@ -323,9 +324,7 @@ document.getElementById("return-game-button").addEventListener("click", function
 
 // Функция продолжения игры
     function continueGame() {
-        hideDialog(); // Скрыть диалог            
-        currentQuestionIndex++;
-        nextQuestion()
+        hideDialog(); // Скрыть диалог                   
     }
 
 // Функция забрания приза

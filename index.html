@@ -15,7 +15,7 @@
 <div id="dialog" class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Поздравление!</h4>
+            <p class="modal-title">Поздравление!</p>
         </div>
         <div id='modal-text' class="modal-body">
             <p>Поздравляем! Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?</p>
@@ -23,6 +23,22 @@
         <div class="modal-footer">
             <button id="continue-game-btn" class="btn btn-primary">Продолжить игру</button>
             <button id="claim-prize-btn" class="btn btn-success">Забрать приз</button>
+        </div>
+    </div>
+</div>
+<div id="mistersuhint" class="mistersu-dialog">
+    <div class="mistersu-content">
+        <div id="mistersu-image" class="modal-image">
+            <img src="/pic/mister_су_pic.png" alt="mister_су_pic">
+        </div>       
+        <div class="mistersu-header">
+            <p class="modal-title">ПОДСКАЗКА МИСТЕРА СУ</p>
+        </div>        
+        <div id="mistersu-hint-text" class="modal-body">
+            <p>Текст подсказки</p>
+        </div>
+        <div class="modal-footer">
+            <button id="return-game-button" class="btn-modal-dialog">Вернуться к игре</button>            
         </div>
     </div>
 </div>
@@ -77,13 +93,16 @@ document.getElementById('music-off').addEventListener('click', switchMusic);
 document.querySelector('.restart-button').addEventListener('click', restartGame);      
 document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
 document.getElementById("continue-game-btn").addEventListener("click", function () {
+    console.log('Нажата кнопка продолжить игру');
     hideDialog(); // Скрыть диалог
     continueGame(); // Продолжение игры
 });
-
 document.getElementById("claim-prize-btn").addEventListener("click", function () {
     hideDialog(); // Скрыть диалог
     claimPrize(); // Забирание приза
+});
+document.getElementById("return-game-button").addEventListener("click", function () {
+    hideDialog(); // Скрыть диалог    
 });
        
     function startGame() {
@@ -196,8 +215,7 @@ document.getElementById("claim-prize-btn").addEventListener("click", function ()
 
         switch (hintType) {
             case 'friend':
-                let randomHint = friendHints[Math.floor(Math.random() * friendHints.length)];
-                alert(randomHint);
+                showMisterSuHint()                
                 break;           
             case '5050':
                 removeTwoWrongAnswers();
@@ -241,9 +259,17 @@ document.getElementById("claim-prize-btn").addEventListener("click", function ()
     document.getElementById('modal-text').textContent = text;    
     }
 
+    //Показ подсказки места Су
+    function showMisterSuHint() {
+        let randomHintText = friendHints[Math.floor(Math.random() * friendHints.length)];
+        document.getElementById("mistersuhint").style.display = "block";
+        document.getElementById('mistersu-hint-text').textContent = randomHintText;
+    }
+
 // Скрытие модального окна
     function hideDialog() {
-    document.getElementById("dialog").style.display = "none";
+    document.getElementById('dialog').style.display = "none";
+    document.getElementById('mistersuhint').style.display = "none";
     }
 
 // Функция продолжения игры

@@ -90,20 +90,6 @@ const bronzeLevel = 'BRONZE';
 const silverLevel = 'SILVER';
 const goldLevel = 'GOLD';
 
-const friendHints = [
-    'Хм... Интересный вопрос. Мой внутренний компас указывает на ' + questions[currentQuestionIndex].correctAnswer + ', но... вдруг это ловушка? В общем, решай сам, я лишь скромный наблюдатель за звёздным небом.',
-    'Вероятнее всего, ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но я бы на твоём месте перепроверил всё трижды, а потом ещё раз. На всякий случай. Просто на всякий.',
-    'По моим расчётам (которые, конечно, могут быть слегка неточными), правильный ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но... я бы не стал на этом слишком настаивать. Вдруг это всё заговор?',
-    'Интуиция подсказывает мне ' + questions[currentQuestionIndex].correctAnswer + ', но интуиция – штука капризная. Вон, вчера она мне сказала, что дождь будет – а он, видите ли, не пошёл! Задумайся над этим…',
-    'Я вижу... я вижу... Ага! Ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Почти наверняка. Но... есть небольшое, совсем крошечное, едва уловимое сомнение...',
-    'Мой магический хрустальный шар (ну, обычный стеклянный, но звучит так круче) показывает ' + questions[currentQuestionIndex].correctAnswer + '. Однако, этот шар сегодня немного мутноват. Может, его протереть? Или всё-таки рискнуть?',
-    'Согласно древним свиткам (ну, на самом деле, я это в Википедии прочитал), правильный ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Однако, древние свитки часто ошибаются.',
-    'Звёзды намекают на ответ – ' + questions[currentQuestionIndex].correctAnswer + ', но я подозреваю, что это всего лишь планетарное выравнивание, которое не имеет отношения к викторине. Или имеет? Загадка!',
-    'Инстинкты кричат "' + questions[currentQuestionIndex].correctAnswer + '", но мои инстинкты часто ведут меня к холодильнику, а не к вершинам интеллекта. Сделай выводы.',
-    'Согласно моей тщательно разработанной системе (написанной на салфетке), ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но салфетка немного заляпана соусом терияки. Случайность? Не думаю...',
-    'Логика подсказывает ' + questions[currentQuestionIndex].correctAnswer + ', но логика – сухая наука. А жизнь прекрасна и многогранна. Как и выбор вариантов ответов.'
-];
-
 let timerInterval = null;
 const SECONDS_FOR_ONE_QUESTION = 30;
 let audioMain = document.getElementById("audioMain");
@@ -296,13 +282,13 @@ document.getElementById("return-game-button").addEventListener("click", function
             modalTextElement.textContent = 'Вторая несгораемая сумма – это круто! Но игра еще не окончена. Продолжаешь бороться за главный приз или заберешь награду?';                
             modalImage.src = 'pic/level2_prize_cat.png';
                 break;
-            case goldLevel:
-            document.querySelector('.modal-footer').classList.add('hidden');
+            case goldLevel:            
+            document.getElementById('modal-footer-bronze-silver').style.display = 'none';
             document.querySelector('.modal-footer-gold').classList.remove('hidden');
 
             textHeaderElement.textContent = 'Победа!';
             modalTextElement.textContent = 'Ты ответил на все вопросы и выиграл 10 000 баллов! Перед тобой преклоняются все гуру пикников, повелители дач и грозы субботников ;)';
-            modalImage.src = 'pic/level3_prize_cat';                    
+            modalImage.src = 'pic/level3_prize_cat.png';                    
                 break;    
         }
 
@@ -310,11 +296,28 @@ document.getElementById("return-game-button").addEventListener("click", function
     }
 
     //Показ подсказки места Су
-    function showMisterSuHint() {
-        let randomHintText = friendHints[Math.floor(Math.random() * friendHints.length)];
-        document.getElementById("mistersuhint").style.display = "block";
-        document.getElementById('mistersu-hint-text').textContent = randomHintText;
-    }
+function showMisterSuHint() {
+    let quetionsVariant = getCurrentQuestionListForMisterSu();
+    let randomHintText = quetionsVariant[Math.floor(Math.random() * quetionsVariant.length)];
+    document.getElementById("mistersuhint").style.display = "block";
+    document.getElementById('mistersu-hint-text').textContent = randomHintText;
+}
+
+function getCurrentQuestionListForMisterSu() {
+    return friendHints = [
+    'Хм... Интересный вопрос. Мой внутренний компас указывает на ' + questions[currentQuestionIndex].correctAnswer + ', но... вдруг это ловушка? В общем, решай сам, я лишь скромный наблюдатель за звёздным небом.',
+    'Вероятнее всего, ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но я бы на твоём месте перепроверил всё трижды, а потом ещё раз. На всякий случай. Просто на всякий.',
+    'По моим расчётам (которые, конечно, могут быть слегка неточными), правильный ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но... я бы не стал на этом слишком настаивать. Вдруг это всё заговор?',
+    'Интуиция подсказывает мне ' + questions[currentQuestionIndex].correctAnswer + ', но интуиция – штука капризная. Вон, вчера она мне сказала, что дождь будет – а он, видите ли, не пошёл! Задумайся над этим…',
+    'Я вижу... я вижу... Ага! Ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Почти наверняка. Но... есть небольшое, совсем крошечное, едва уловимое сомнение...',
+    'Мой магический хрустальный шар (ну, обычный стеклянный, но звучит так круче) показывает ' + questions[currentQuestionIndex].correctAnswer + '. Однако, этот шар сегодня немного мутноват. Может, его протереть? Или всё-таки рискнуть?',
+    'Согласно древним свиткам (ну, на самом деле, я это в Википедии прочитал), правильный ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Однако, древние свитки часто ошибаются.',
+    'Звёзды намекают на ответ – ' + questions[currentQuestionIndex].correctAnswer + ', но я подозреваю, что это всего лишь планетарное выравнивание, которое не имеет отношения к викторине. Или имеет? Загадка!',
+    'Инстинкты кричат "' + questions[currentQuestionIndex].correctAnswer + '", но мои инстинкты часто ведут меня к холодильнику, а не к вершинам интеллекта. Сделай выводы.',
+    'Согласно моей тщательно разработанной системе (написанной на салфетке), ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но салфетка немного заляпана соусом терияки. Случайность? Не думаю...',
+    'Логика подсказывает ' + questions[currentQuestionIndex].correctAnswer + ', но логика – сухая наука. А жизнь прекрасна и многогранна. Как и выбор вариантов ответов.'
+];
+} 
 
 // Скрытие модального окна
     function hideDialog() {

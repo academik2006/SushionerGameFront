@@ -8,8 +8,14 @@
     <script src="questions.js"></script>    
 </head>
 <body>
+
 <audio loop id="audioMain">
     <source src="music/main-asia.mp3" type="audio/mpeg">    
+    Проигрывание музыки не поддерживается.
+</audio>
+
+<audio loop id="audioWin">
+    <source src="music/win.mp3" type="audio/mpeg">    
     Проигрывание музыки не поддерживается.
 </audio>
 <div id="dialog" class="modal-dialog">
@@ -118,6 +124,7 @@ const goldLevel = 'GOLD';
 let timerInterval = null;
 const SECONDS_FOR_ONE_QUESTION = 30;
 let audioMain = document.getElementById("audioMain");
+let audioWin = document.getElementById("audioWin");
 
 document.getElementById('start-game').addEventListener('click', startGame);
 document.getElementById('music-off').addEventListener('click', switchMusic);
@@ -149,6 +156,7 @@ document.getElementById("exit-game-lose").addEventListener("click", function () 
         document.getElementById('start-game').classList.add('hidden');
         document.querySelector('.game').classList.remove('hidden');
         audioMain.volume = 0.2;
+        audioWin.volume = 0.2;
         audioMain.play();       
         nextQuestion();
     }
@@ -189,27 +197,24 @@ document.getElementById("exit-game-lose").addEventListener("click", function () 
     function nextQuestion() {        
         
         document.querySelector('.container h1').textContent = 'Номер вопроса: '+ (currentQuestionIndex+1);        
-        resetTimerForNextQuestion()  
+        resetTimerForNextQuestion();  
         
         switch (currentQuestionIndex) {
             case 4:
-                showModalDialog(bronzeLevel)                
+                showModalDialog(bronzeLevel);                
                 break;           
             case 8:                
-                showModalDialog(silverLevel)
-                break; 
-            case 10:
-                showModalDialog(goldLevel)
-                break;               
+                showModalDialog(silverLevel);
+                break;             
         }
 
-
-
-        startTimer()
-        if (currentQuestionIndex >= questions.length) {
+        if (currentQuestionIndex >= questions.length) {            
             showFinalScreen(true);
             return;
         }
+
+        startTimer()
+        
 
         const question = questions[currentQuestionIndex];
         document.querySelector('.question').textContent = question.question;
@@ -288,6 +293,8 @@ document.getElementById("exit-game-lose").addEventListener("click", function () 
         let finalText = " ";
         if(isWin) {
             finalText = `Вы выиграли ${totalPrize} рублей!`
+            audioWin.play()
+            showModalDialog(goldLevel);
         } else {   
             document.getElementById("losegame").style.display = "block";         
             //document.getElementById('losegame').classList.remove('hidden');
@@ -318,7 +325,7 @@ document.getElementById("exit-game-lose").addEventListener("click", function () 
             modalTextElement.textContent = 'Вторая несгораемая сумма – это круто! Но игра еще не окончена. Продолжаешь бороться за главный приз или заберешь награду?';                
             modalImage.src = 'pic/level2_prize_cat.png';
                 break;
-            case goldLevel:            
+            case goldLevel:                            
             document.getElementById('modal-footer-bronze-silver').style.display = 'none';
             document.querySelector('.modal-footer-gold').classList.remove('hidden');
 

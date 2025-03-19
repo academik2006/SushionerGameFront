@@ -134,6 +134,16 @@ button:hover {
     text-align: center;
 }
 
+.modal-lose-title {
+    margin-top: 0;
+    font-size: 28px;
+    color: #2B2A29;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+}
+
 .modal-image {
     display: flex;    
     justify-content: center;    
@@ -145,6 +155,19 @@ button:hover {
     height: 256px;    
     margin: auto; /* Отцентрируем изображение внутри контейнера */
 }
+
+.modal-image-lose {
+    display: flex;    
+    justify-content: center;    
+    margin-top: 30px;    
+}
+
+.modal-image-lose img {
+    width: 360px;
+    height: 250px;    
+    margin: auto; /* Отцентрируем изображение внутри контейнера */
+}
+
 
 .modal-palki {
     display: flex;    
@@ -187,6 +210,24 @@ button:hover {
     border-radius: 5px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
     background-image: url('pic/bg_blue.jpg'); /* Путь к изображению */
+    background-size: 100% 100%; /* Масштабируем изображение, чтобы оно занимало весь контейнер */
+    background-position: center; /* Центруем изображение */
+    background-repeat: no-repeat; /* Изображение не повторяется */
+}
+
+.lose-game-dialog {
+    display: none;
+    position: fixed;
+    width: 375px; 
+    height: 734px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2000;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    background-image: url('pic/yellow_bg.jpg'); /* Путь к изображению */
     background-size: 100% 100%; /* Масштабируем изображение, чтобы оно занимало весь контейнер */
     background-position: center; /* Центруем изображение */
     background-repeat: no-repeat; /* Изображение не повторяется */
@@ -271,6 +312,19 @@ button:hover {
     border: 2px solid #2B2A29; /* Добавлен стиль границы */
     border-radius: 50px;
     background-color: #2E9699;
+    font-size: 18px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;    
+}
+
+.btn-modal-lose-game-dialog {
+    margin-top: 30px;
+    width: 327px;
+    height: 64px;
+    border: 2px solid #2B2A29; /* Добавлен стиль границы */
+    border-radius: 50px;
+    background-color: #C98F22;
     font-size: 18px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-transform: uppercase;

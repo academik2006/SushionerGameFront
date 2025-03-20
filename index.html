@@ -18,6 +18,45 @@
     <source src="music/win.mp3" type="audio/mpeg">    
     Проигрывание музыки не поддерживается.
 </audio>
+
+<div id = "rules-id" class="rules">
+    <div>
+        <div class="image-rules">            
+            <img src="pic/rules_cat.png" alt="rules_cat_pic">
+        </div>       
+        <div class="title_28_black">
+            <p>Приготовься к интеллектуальному пикнику!</p>
+        </div>        
+        <div class="modal-body">
+            <p>Большая Первомайская викторина от Суши Мастер – это настоящий майский марафон знаний.</p>
+        </div>                
+        <div class="modal-footer">            
+            <button id="start-game">Начать игру</button>      
+        </div>
+    </div>   
+</div>
+
+<div id = "main_questions_screen_id" class="main_questions_screen">
+    <div>
+        <div id="current-question-text" class="modal-title">
+            <p>Какой вид картошки?</p>
+        </div>
+        <div class="game">
+            <button id="music-off">Выключить звук</button>        
+            <div style="margin-top: 20px;"><span id="timer"></span></div>
+            <div class="question-container">
+                <p class="question"></p>
+                <div class="answers"></div>
+            </div>
+            <div class="hints">
+                <button class="hint-button" data-hint="friend">Спросить Мастера Су</button>            
+                <button class="hint-button" data-hint="5050">50/50</button>
+            </div>
+            <p class="result"></p>
+        </div>                 
+    </div>
+</div>
+
 <div id="сongratulations-dialogue" class="modal-dialog">
     <div class="modal-content">
         <div class="modal-image">            
@@ -69,49 +108,20 @@
 <div id="losegame" class="lose-game-dialog">
     <div>
         <div class="modal-image-lose">            
-            <img src="pic/lose_game_cat.png" alt="lose_game_cat_pic">
+            <img src="pic/lose_cat_2.png" alt="lose_game_cat2_pic">
         </div>       
-        <div class="modal-lose-title">
-            <p>Твой шашлычный запал на сегодня иссяк</p>
+        <div class="title_28_black">
+            <p>Эх, бывает</p>
         </div>        
         <div class="modal-body">
-            <p>Отдохни, подкрепись, и завтра снова покоряй вершины знаний</p>
-        </div>
-        <!-- <div id="palki" class="modal-palki">
-            <img src="pic/palki.png" alt="palki_pic">
-        </div>    -->
+            <p>Сегодня знания немного подвели. Но не сдавайся! Завтра – реванш.</p>
+        </div>        
         <div class="modal-palki">            
-            <img src="pic/leika.png" alt="leika_pic">
-        </div>       
+            <img src="pic/riba.png" alt="riba_pic">
+        </div>     
         <div class="modal-footer">            
             <button id="exit-game-lose" class="btn-modal-lose-game-dialog">Попробовать завтра</button>            
         </div>
-    </div>
-</div>
-
-<div id = "container-id" class="container">
-    <h1>Большая Первомайская викторина от Суши Мастер</h1>
-    <button id="start-game">Начать игру</button>      
-</div>
-
-<div id = "main_questions_screen" class="main_questions_screen">
-    <div>
-        <div class="modal-title">
-            <p>Какой вид картошки?</p>
-        </div>
-        <div class="game">
-            <button id="music-off">Выключить звук</button>        
-            <div style="margin-top: 20px;"><span id="timer"></span></div>
-            <div class="question-container">
-                <p class="question"></p>
-                <div class="answers"></div>
-            </div>
-            <div class="hints">
-                <button class="hint-button" data-hint="friend">Спросить Мастера-Су</button>            
-                <button class="hint-button" data-hint="5050">50/50</button>
-            </div>
-            <p class="result"></p>
-        </div>                 
     </div>
 </div>
 
@@ -159,8 +169,8 @@ document.querySelectorAll('.hint-button').forEach(button => {
     });
        
     function startGame() {
-        document.getElementById("main_questions_screen").style.display = "block";
-        document.getElementById('container-id').classList.add('hidden');        
+        document.getElementById("main_questions_screen_id").style.display = "block";
+        document.getElementById('rules-id').style.display = "none";        
         audioMain.volume = 0.2;
         audioWin.volume = 0.2;
         audioMain.play();       
@@ -202,7 +212,7 @@ document.querySelectorAll('.hint-button').forEach(button => {
 
     function nextQuestion() {        
         
-        document.querySelector('.container h1').textContent = 'Номер вопроса: '+ (currentQuestionIndex+1);        
+        document.getElementById('current-question-text').textContent = 'Номер вопроса: '+ (currentQuestionIndex+1);        
         resetTimerForNextQuestion();  
         
         switch (currentQuestionIndex) {
@@ -284,8 +294,8 @@ document.querySelectorAll('.hint-button').forEach(button => {
                 const buttons = document.querySelectorAll('.answer-button');
                 buttons.forEach(button => {
                     if (button.textContent === wrongAnswer) {
-                        button.disabled = true;
-                        button.style.opacity = 0.5;
+                        button.style.display = 'none';
+                        //button.style.opacity = 0.5;
                     }
                 });
             }
@@ -310,7 +320,7 @@ document.querySelectorAll('.hint-button').forEach(button => {
         let textHeaderElement = document.getElementById('modal-header-id');
         let modalTextElement = document.getElementById('modal-text');
         let modalImage = document.getElementById('modal-image-pic');
-        document.getElementById("main_questions_screen").style.display = "none";
+        document.getElementById("main_questions_screen_id").style.display = "none";
         document.getElementById("сongratulations-dialogue").style.display = "block";
 
         switch (level) {
@@ -341,7 +351,7 @@ document.querySelectorAll('.hint-button').forEach(button => {
 function showMisterSuHint() {
     let quetionsVariant = getCurrentQuestionListForMisterSu();
     let randomHintText = quetionsVariant[Math.floor(Math.random() * quetionsVariant.length)];
-    document.getElementById("main_questions_screen").style.display = "none";
+    document.getElementById("main_questions_screen_id").style.display = "none";
     document.getElementById("mistersuhint").style.display = "block";
     document.getElementById('mistersu-hint-text').textContent = randomHintText;
 }
@@ -369,7 +379,7 @@ function getCurrentQuestionListForMisterSu() {
     document.getElementById('сongratulations-dialogue').style.display = "none";
     document.getElementById('mistersuhint').style.display = "none";
     document.getElementById('losegame').style.display = "none";
-    document.getElementById("main_questions_screen").style.display = "block";
+    document.getElementById("main_questions_screen_id").style.display = "block";
     }
 
 // Функция продолжения игры

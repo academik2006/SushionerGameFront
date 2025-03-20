@@ -18,7 +18,7 @@
     <source src="music/win.mp3" type="audio/mpeg">    
     Проигрывание музыки не поддерживается.
 </audio>
-<div id="dialog" class="modal-dialog">
+<div id="сongratulations-dialogue" class="modal-dialog">
     <div class="modal-content">
         <div class="modal-image">            
             <img id="modal-image-pic" src="pic/level1_prize_cat.png" alt="modal_image_pic">
@@ -89,27 +89,32 @@
     </div>
 </div>
 
-<div class="container">
+<div id = "container-id" class="container">
     <h1>Большая Первомайская викторина от Суши Мастер</h1>
-    <button id="start-game">Начать игру</button>
-    <div class="game hidden">
-        <button id="music-off">Выключить звук</button>        
-        <div style="margin-top: 20px;"><span id="timer"></span></div>
-        <div class="question-container">
-            <p class="question"></p>
-            <div class="answers"></div>
+    <button id="start-game">Начать игру</button>      
+</div>
+
+<div id = "main_questions_screen" class="main_questions_screen">
+    <div>
+        <div class="modal-title">
+            <p>Какой вид картошки?</p>
         </div>
-        <div class="hints">
-            <button class="hint-button" data-hint="friend">Спросить Мастера-Су</button>            
-            <button class="hint-button" data-hint="5050">50/50</button>
-        </div>
-        <p class="result"></p>
-    </div>
-    <div class="final-screen hidden">
-        <p class="prize"></p>
-        <button class="restart-button">Начать заново</button>
+        <div class="game">
+            <button id="music-off">Выключить звук</button>        
+            <div style="margin-top: 20px;"><span id="timer"></span></div>
+            <div class="question-container">
+                <p class="question"></p>
+                <div class="answers"></div>
+            </div>
+            <div class="hints">
+                <button class="hint-button" data-hint="friend">Спросить Мастера-Су</button>            
+                <button class="hint-button" data-hint="5050">50/50</button>
+            </div>
+            <p class="result"></p>
+        </div>                 
     </div>
 </div>
+
 <script>
 
 let currentQuestionIndex = 0;
@@ -128,7 +133,7 @@ let audioWin = document.getElementById("audioWin");
 
 document.getElementById('start-game').addEventListener('click', startGame);
 document.getElementById('music-off').addEventListener('click', switchMusic);
-document.querySelector('.restart-button').addEventListener('click', restartGame);      
+
 document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
 document.getElementById("continue-game-btn").addEventListener("click", function () {
     hideDialog(); // Скрыть диалог
@@ -142,19 +147,20 @@ document.getElementById("btn-modal-dialog-take-prize-gold").addEventListener("cl
     hideDialog(); // Скрыть диалог
     claimPrize(); // Забирание приза
 });
-document.getElementById("return-game-button").addEventListener("click", function () {
-    continueGame()
-});
+document.getElementById("return-game-button").addEventListener("click", continueGame);
 
 document.getElementById("exit-game-lose").addEventListener("click", function () {
     //тут нужно закрывать игру с призом NONE
     hideDialog()
 });
+
+document.querySelectorAll('.hint-button').forEach(button => {
+        button.addEventListener('click', () => useHint(button.dataset.hint));
+    });
        
     function startGame() {
-        document.querySelector('.container h1').textContent = 'Игра началась!';
-        document.getElementById('start-game').classList.add('hidden');
-        document.querySelector('.game').classList.remove('hidden');
+        document.getElementById("main_questions_screen").style.display = "block";
+        document.getElementById('container-id').classList.add('hidden');        
         audioMain.volume = 0.2;
         audioWin.volume = 0.2;
         audioMain.play();       
@@ -287,23 +293,15 @@ document.getElementById("exit-game-lose").addEventListener("click", function () 
     }
 
     function showFinalScreen(isWin) {
-        audioMain.pause()
-        document.querySelector('.game').classList.add('hidden');
-        document.querySelector('.container h1').textContent = 'Конец игры';
+        audioMain.pause()                
         let finalText = " ";
         if(isWin) {
             finalText = `Вы выиграли ${totalPrize} рублей!`
             audioWin.play()
             showModalDialog(goldLevel);
         } else {   
-            document.getElementById("losegame").style.display = "block";         
-            //document.getElementById('losegame').classList.remove('hidden');
-        } 
-        
-        //document.querySelector('.final-screen').classList.remove('hidden');
-        //document.querySelector('.prize').textContent = finalText;        
-
-        
+            document.getElementById("losegame").style.display = "block";          
+        }         
     }
 
     // Показ модального окна
@@ -312,7 +310,8 @@ document.getElementById("exit-game-lose").addEventListener("click", function () 
         let textHeaderElement = document.getElementById('modal-header-id');
         let modalTextElement = document.getElementById('modal-text');
         let modalImage = document.getElementById('modal-image-pic');
-        document.getElementById("dialog").style.display = "block";
+        document.getElementById("main_questions_screen").style.display = "none";
+        document.getElementById("сongratulations-dialogue").style.display = "block";
 
         switch (level) {
             case bronzeLevel:
@@ -342,31 +341,35 @@ document.getElementById("exit-game-lose").addEventListener("click", function () 
 function showMisterSuHint() {
     let quetionsVariant = getCurrentQuestionListForMisterSu();
     let randomHintText = quetionsVariant[Math.floor(Math.random() * quetionsVariant.length)];
+    document.getElementById("main_questions_screen").style.display = "none";
     document.getElementById("mistersuhint").style.display = "block";
     document.getElementById('mistersu-hint-text').textContent = randomHintText;
 }
 
 function getCurrentQuestionListForMisterSu() {
+    let correctAnswer = questions[currentQuestionIndex].correctAnswer
+
     return friendHints = [
-    'Хм... Интересный вопрос. Мой внутренний компас указывает на ' + questions[currentQuestionIndex].correctAnswer + ', но... вдруг это ловушка? В общем, решай сам, я лишь скромный наблюдатель за звёздным небом.',
-    'Вероятнее всего, ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но я бы на твоём месте перепроверил всё трижды, а потом ещё раз. На всякий случай. Просто на всякий.',
-    'По моим расчётам (которые, конечно, могут быть слегка неточными), правильный ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но... я бы не стал на этом слишком настаивать. Вдруг это всё заговор?',
-    'Интуиция подсказывает мне ' + questions[currentQuestionIndex].correctAnswer + ', но интуиция – штука капризная. Вон, вчера она мне сказала, что дождь будет – а он, видите ли, не пошёл! Задумайся над этим…',
-    'Я вижу... я вижу... Ага! Ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Почти наверняка. Но... есть небольшое, совсем крошечное, едва уловимое сомнение...',
-    'Мой магический хрустальный шар (ну, обычный стеклянный, но звучит так круче) показывает ' + questions[currentQuestionIndex].correctAnswer + '. Однако, этот шар сегодня немного мутноват. Может, его протереть? Или всё-таки рискнуть?',
-    'Согласно древним свиткам (ну, на самом деле, я это в Википедии прочитал), правильный ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Однако, древние свитки часто ошибаются.',
-    'Звёзды намекают на ответ – ' + questions[currentQuestionIndex].correctAnswer + ', но я подозреваю, что это всего лишь планетарное выравнивание, которое не имеет отношения к викторине. Или имеет? Загадка!',
-    'Инстинкты кричат "' + questions[currentQuestionIndex].correctAnswer + '", но мои инстинкты часто ведут меня к холодильнику, а не к вершинам интеллекта. Сделай выводы.',
-    'Согласно моей тщательно разработанной системе (написанной на салфетке), ответ – ' + questions[currentQuestionIndex].correctAnswer + '. Но салфетка немного заляпана соусом терияки. Случайность? Не думаю...',
-    'Логика подсказывает ' + questions[currentQuestionIndex].correctAnswer + ', но логика – сухая наука. А жизнь прекрасна и многогранна. Как и выбор вариантов ответов.'
+    'Хм... Интересный вопрос. Мой внутренний компас указывает на ' + correctAnswer + ', но... вдруг это ловушка? В общем, решай сам, я лишь скромный наблюдатель за звёздным небом.',
+    'Вероятнее всего, ответ – ' + correctAnswer + '. Но я бы на твоём месте перепроверил всё трижды, а потом ещё раз. На всякий случай. Просто на всякий.',
+    'По моим расчётам (которые, конечно, могут быть слегка неточными), правильный ответ – ' + correctAnswer + '. Но... я бы не стал на этом слишком настаивать. Вдруг это всё заговор?',
+    'Интуиция подсказывает мне ' + correctAnswer + ', но интуиция – штука капризная. Вон, вчера она мне сказала, что дождь будет – а он, видите ли, не пошёл! Задумайся над этим…',
+    'Я вижу... я вижу... Ага! Ответ – ' + correctAnswer + '. Почти наверняка. Но... есть небольшое, совсем крошечное, едва уловимое сомнение...',
+    'Мой магический хрустальный шар (ну, обычный стеклянный, но звучит так круче) показывает ' + correctAnswer + '. Однако, этот шар сегодня немного мутноват. Может, его протереть? Или всё-таки рискнуть?',
+    'Согласно древним свиткам (ну, на самом деле, я это в Википедии прочитал), правильный ответ – ' + correctAnswer + '. Однако, древние свитки часто ошибаются.',
+    'Звёзды намекают на ответ – ' + correctAnswer + ', но я подозреваю, что это всего лишь планетарное выравнивание, которое не имеет отношения к викторине. Или имеет? Загадка!',
+    'Инстинкты кричат "' + correctAnswer + '", но мои инстинкты часто ведут меня к холодильнику, а не к вершинам интеллекта. Сделай выводы.',
+    'Согласно моей тщательно разработанной системе (написанной на салфетке), ответ – ' + correctAnswer + '. Но салфетка немного заляпана соусом терияки. Случайность? Не думаю...',
+    'Логика подсказывает ' + correctAnswer + ', но логика – сухая наука. А жизнь прекрасна и многогранна. Как и выбор вариантов ответов.'
 ];
 } 
 
 // Скрытие модального окна
     function hideDialog() {
-    document.getElementById('dialog').style.display = "none";
+    document.getElementById('сongratulations-dialogue').style.display = "none";
     document.getElementById('mistersuhint').style.display = "none";
     document.getElementById('losegame').style.display = "none";
+    document.getElementById("main_questions_screen").style.display = "block";
     }
 
 // Функция продолжения игры
@@ -379,20 +382,8 @@ function getCurrentQuestionListForMisterSu() {
     console.log("Приз получен!");
     showFinalScreen(true)
     // Здесь добавляется логика получения приза
-    }
-
-    function restartGame() {
-        currentQuestionIndex = 0;
-        hintsUsed = [];
-        totalPrize = 0;
-        document.querySelector('.final-screen').classList.add('hidden');
-        document.querySelector('.container h1').textContent = 'Кто хочет стать миллионером?';
-        document.getElementById('start-game').classList.remove('hidden');
-    }
-
-    document.querySelectorAll('.hint-button').forEach(button => {
-        button.addEventListener('click', () => useHint(button.dataset.hint));
-    });
+    }   
+   
 </script>
 </body>
 </html>

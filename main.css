@@ -14,30 +14,71 @@ body {
             align-items: center;
             height: 100vh;            
         }
-.rules {            
+.start-screen {            
             width: 375px; 
             height: 734px;
-            text-align: center;
-            background-color: gray;
+            text-align: center;            
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-image: url('pic/bg_orange.png'); /* Путь к изображению */
+            background-size: 100% 100%;
+            background-position: center; /* Центруем изображение */
+            background-repeat: no-repeat; /* Изображение не повторяется */
         }
+.rules-screen {            
+            display: none; /* Скрываем диалог по умолчанию */
+            width: 375px;             
+            height: 734px;
+            text-align: center;            
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-image: url('pic/bg_orange.png'); /* Путь к изображению */
+            background-size: 100% 100%;
+            background-position: center; /* Центруем изображение */
+            background-repeat: no-repeat; /* Изображение не повторяется */
+        }        
 h1 {
             color: #333;
             margin-bottom: 20px;
         }
-button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
+button {            
+            width: 327px;
+            height: 64px;
+            border: 2px solid #2B2A29; /* Добавлен стиль границы */
+            border-radius: 24px;
+            font-size: 18px;
+            font-family: 'Pusia', Arial, sans-serif;    
+            color: #FEFEFE;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background-color: #45a049;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease-in-out;
         }
 button:hover {
-            background-color: #0056b3;
-        }
+            transform: scale(1.05); /* Увеличение кнопки при наведении */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* Добавление тени */
+        }             
+
+.button-common {
+            width: 327px;
+            height: 64px;
+            border: 2px solid #2B2A29; /* Добавлен стиль границы */
+            border-radius: 24px;
+            font-size: 18px;
+            font-family: 'Pusia', Arial, sans-serif;    
+            color: #FEFEFE;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background-color: #45a049;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            }
+.button-common-rules {
+            background-color: #C98F22;
+        }        
 .question-container {
             margin-top: 40px;                         
         }
@@ -52,16 +93,18 @@ button:hover {
         }
 
 .answer-button {            
-        width: 100%;
+        width: 327px;
         height: 64px;
         border: 2px solid #2B2A29; /* Добавлен стиль границы */
-        border-radius: 50px;
-        background-color: #517709;
+        border-radius: 24px;
         font-size: 18px;
-        font-family: 'Pusia', Arial, sans-serif;        
-        letter-spacing: 2px;    
+        font-family: 'Pusia', Arial, sans-serif;    
+        color: #FEFEFE;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background-color: #45a049;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: all 0.3s ease-in-out;
         }
 .answer-button:hover {
             background-color: #F04F23;
@@ -71,6 +114,13 @@ button:hover {
             font-size: 16px;
             color: green;
         }
+.hints {
+        margin-top: 10px;
+        display: flex; /* Включаем Flexbox для контейнера */
+        gap: 10px; /* Устанавливаем отступ между элементами */
+        justify-content: center; /* Центрирование элементов по горизонтали */
+        }
+
 .hint-button {
             margin-top: 20px;
             padding: 10px 20px;
@@ -177,15 +227,37 @@ button:hover {
     margin: auto; /* Отцентрируем изображение внутри контейнера */
 }
 
-.image-rules {
+.image-start-screen {
     display: flex;    
     justify-content: center;    
     margin-top: 30px;    
 }
 
-.image-rules img {
+.image-start-screen img {
     width: 327px;
     height: 263px;    
+    margin: auto; /* Отцентрируем изображение внутри контейнера */
+}
+
+.image-rules-screen {
+    display: flex;    
+    justify-content: center;        
+}
+
+.image-rules-screen img {
+    width: 169px;
+    height: 100px;    
+    margin: auto; /* Отцентрируем изображение внутри контейнера */
+}
+
+.image-main-screen-cat {
+    display: flex;    
+    justify-content: center;        
+}
+
+.image-main-screen-cat img {
+    width: 234px;
+    height: 184px;    
     margin: auto; /* Отцентрируем изображение внутри контейнера */
 }
 
@@ -205,6 +277,55 @@ button:hover {
     margin-top: 10px;
     font-size: 18px;
     color: #FEFEFE;
+    letter-spacing: 2px;
+    font-family: 'Pusia', Arial, sans-serif;    
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 120%;
+}
+
+.start-screen-body {    
+    width: 327px;
+    height: 120px;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #322A22;
+    background-color: #EAD0A0;
+    border: 2px solid #B18636; /* Добавлен стиль границы */
+    border-radius: 16px;
+    letter-spacing: 2px;
+    font-family: 'Pusia', Arial, sans-serif;    
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 120%;
+}
+
+.rules-screen-body {    
+    width: 327px;
+    height: 431px;    
+    font-size: 18px;
+    color: #322A22;
+    padding: 16px;
+    gap: 10;
+    background-color: #EAD0A0;
+    border: 2px solid #B18636; /* Добавлен стиль границы */
+    border-radius: 16px;
+    letter-spacing: 2px;
+    font-family: 'Pusia', Arial, sans-serif;    
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 120%;
+}
+
+.main-screen-body {    
+    width: 327px;
+    height: 130px;
+    margin-top: 10px;
+    font-size: 18px;
+    color: #322A22;
+    background-color: #EAD0A0;
+    border: 2px solid #B18636; /* Добавлен стиль границы */
+    border-radius: 16px;
     letter-spacing: 2px;
     font-family: 'Pusia', Arial, sans-serif;    
     text-transform: uppercase;
@@ -258,15 +379,12 @@ button:hover {
     display: none; /* Скрываем диалог по умолчанию */
     position: fixed;
     width: 375px; 
-    height: 734px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    height: 734px;  
     z-index: 1000;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-    background-image: url('pic/bg_blue.jpg'); /* Путь к изображению */
+    background-image: url('pic/green_bg.jpg'); /* Путь к изображению */
     background-size: 100% 100%; /* Масштабируем изображение, чтобы оно занимало весь контейнер */
     background-position: center; /* Центруем изображение */
     background-repeat: no-repeat; /* Изображение не повторяется */
@@ -368,6 +486,25 @@ button:hover {
     font-family: 'Pusia', Arial, sans-serif;    
     text-transform: uppercase;
     letter-spacing: 2px;    
+}
+
+.btn-main-screen-option {
+    width: 75px;
+    height: 64px;
+    border: 2px solid #2B2A29; /* Добавлен стиль границы */
+    border-radius: 24px;
+    gap: 10;
+    cursor: pointer; /* Указатель мыши становится рукой при наведении */
+    background-color: green; /* Прозрачность фона кнопки */
+    display: flex; /* Размещаем изображение по центру */
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-main-screen-option img {
+    width: 100%; /* Растягиваем изображение на всю ширину кнопки */
+    height: 100%; /* Растягиваем изображение на всю высоту кнопки */
+    object-fit: contain; /* Сохраняем пропорции изображения */
 }
 
 

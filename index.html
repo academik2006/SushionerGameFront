@@ -19,39 +19,75 @@
     Проигрывание музыки не поддерживается.
 </audio>
 
-<div id = "rules-id" class="rules">
+<div id = "start-screen-id" class="start-screen">
     <div>
-        <div class="image-rules">            
-            <img src="pic/rules_cat.png" alt="rules_cat_pic">
+        <div class="image-start-screen">            
+            <img src="pic/rules_cat.png" alt="start_screen_cat_pic">
         </div>       
         <div class="title_28_black">
             <p>Приготовься к интеллектуальному пикнику!</p>
         </div>        
-        <div class="modal-body">
+        <div class="start-screen-body">
             <p>Большая Первомайская викторина от Суши Мастер – это настоящий майский марафон знаний.</p>
+        </div>
+        <div class="modal-footer" style="margin-top: 20px;">            
+            <button id="show-rules" class="button-common button-common-rules">Читать правила</button>      
         </div>                
-        <div class="modal-footer">            
-            <button id="start-game">Начать игру</button>      
+        <div class="modal-footer" style="margin-top: 20px;">            
+            <button id="start-game" class="button-common">Начать игру</button>      
+        </div>
+    </div>   
+</div>
+
+<div id = "rules-screen-id" class="rules-screen">
+    <div>
+        <div class="title_28_black">
+            <p>Правила игры</p>
+        </div>        
+        <div class="image-rules-screen">            
+            <img src="pic/little_cat_rules.png" alt="rules_screen_cat_pic">
+        </div>               
+        <div class="rules-screen-body">
+            <p>Игрок должен ответить на вопросы о весне, труде, шашлыках, пикниках и прочих радостях Первомая. За каждый правильный ответ – бонусные баллы в копилку. Но это еще не всё! После 4 и 8 вопросов игрока ждёт «несгораемая сумма» – можно забрать заработанное и гордо уйти, или рискнуть и дойти до конца викторины. Везунчик, который верно ответит на 10 вопрос, станет обладателем главного приза – 300 бонусных баллов от Суши Мастер!</p>
+        </div>        
+        <div class="modal-footer" style="margin-top: 20px;">            
+            <button id="start-game2" class="button-common">Начать игру</button>      
         </div>
     </div>   
 </div>
 
 <div id = "main_questions_screen_id" class="main_questions_screen">
     <div>
-        <div id="current-question-text" class="modal-title">
+        <div class="image-main-screen-cat">            
+            <img src="pic/ved_cat.png" alt="ved_screen_cat_pic">
+        </div>        
+        
+        <div style="margin-top: 20px;"><span id="timer"></span></div>
+        
+        <div id="question-text-id" class="main-screen-body">
             <p>Какой вид картошки?</p>
+        </div>        
+        
+        <div class="hints">
+            <button class="btn-main-screen-option" data-hint="5050">
+                <img src="pic/50.png" alt="50_50_pic">
+            </button>
+            <button class="btn-main-screen-option" data-hint="friend">
+                <img src="pic/sushi_master.png" alt="sushi_pic">
+            </button>
+            <button class="btn-main-screen-option">
+                <img src="pic/show_results.png" alt="show_result_pic">
+            </button>
+            <button id="music-off" class="btn-main-screen-option">
+                <img src="pic/sound_pic.png" alt="turn_sound_pic">
+            </button>                                                
         </div>
-        <div class="game">
-            <button id="music-off">Выключить звук</button>        
-            <div style="margin-top: 20px;"><span id="timer"></span></div>
-            <div class="question-container">
-                <p class="question"></p>
+        
+        <div class="game">                        
+            <div class="question-container">                
                 <div class="answers"></div>
             </div>
-            <div class="hints">
-                <button class="hint-button" data-hint="friend">Спросить Мастера Су</button>            
-                <button class="hint-button" data-hint="5050">50/50</button>
-            </div>
+           
             <p class="result"></p>
         </div>                 
     </div>
@@ -142,6 +178,8 @@ let audioMain = document.getElementById("audioMain");
 let audioWin = document.getElementById("audioWin");
 
 document.getElementById('start-game').addEventListener('click', startGame);
+document.getElementById('start-game2').addEventListener('click', startGame);
+document.getElementById('show-rules').addEventListener('click', showRules);
 document.getElementById('music-off').addEventListener('click', switchMusic);
 
 document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
@@ -164,18 +202,30 @@ document.getElementById("exit-game-lose").addEventListener("click", function () 
     hideDialog()
 });
 
-document.querySelectorAll('.hint-button').forEach(button => {
+document.querySelectorAll('.btn-main-screen-option').forEach(button => {
         button.addEventListener('click', () => useHint(button.dataset.hint));
     });
        
     function startGame() {
         document.getElementById("main_questions_screen_id").style.display = "block";
-        document.getElementById('rules-id').style.display = "none";        
+        document.getElementById('start-screen-id').style.display = "none";
+        document.getElementById('rules-screen-id').style.display = "none";                
         audioMain.volume = 0.2;
         audioWin.volume = 0.2;
         audioMain.play();       
         nextQuestion();
     }
+
+    function showRules() {
+        document.getElementById("rules-screen-id").style.display = "block";
+        document.getElementById('start-screen-id').style.display = "none";        
+        audioMain.volume = 0.2;
+        audioWin.volume = 0.2;
+        audioMain.play();               
+    }
+
+
+
     function switchMusic() {
         let button = document.getElementById('music-off');
         if(isMusicPlay) {
@@ -212,7 +262,7 @@ document.querySelectorAll('.hint-button').forEach(button => {
 
     function nextQuestion() {        
         
-        document.getElementById('current-question-text').textContent = 'Номер вопроса: '+ (currentQuestionIndex+1);        
+        //document.getElementById('current-question-text').textContent = 'Номер вопроса: '+ (currentQuestionIndex+1);        
         resetTimerForNextQuestion();  
         
         switch (currentQuestionIndex) {
@@ -233,7 +283,8 @@ document.querySelectorAll('.hint-button').forEach(button => {
         
 
         const question = questions[currentQuestionIndex];
-        document.querySelector('.question').textContent = question.question;
+        document.getElementById('question-text-id').textContent = question.question;
+        //document.querySelector('.question').textContent = question.question;
         document.querySelector('.answers').innerHTML = '';
 
         question.answers.forEach(answer => {

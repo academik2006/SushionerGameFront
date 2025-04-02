@@ -173,9 +173,11 @@ let totalPrize = 0;
 let isMusicPlay = true;
 
 let prizeDiscounteLevel = "0";
-const GOLD = "10";
-const SILVER = "4";
-const BRONZE = "8";
+const goldLevel = "GOLD";
+const silverLevel = "SILVER";
+const bronzeLevel = "BRONZE";
+
+
 
 
 let timerInterval = null;
@@ -261,10 +263,10 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
         
         switch (currentQuestionIndex) {
             case 4:
-                showModalDialog(BRONZE);                
+                showModalDialog(bronzeLevel);                
                 break;           
             case 8:                
-                showModalDialog(SILVER);
+                showModalDialog(silverLevel);
                 break;             
         }
 
@@ -365,12 +367,10 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
     }
 
     function showFinalScreen(isWin) {
-        audioMain.pause()                
-        let finalText = " ";
-        if(isWin) {
-            finalText = `Вы выиграли ${totalPrize} рублей!`
+        audioMain.pause()                        
+        if(isWin) {            
             audioWin.play()
-            showModalDialog(GOLD);
+            showModalDialog(goldLevel);
         } else {   
             document.getElementById("losegame").style.display = "block";          
         }         
@@ -386,26 +386,26 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
         document.getElementById("сongratulations-dialogue").style.display = "block";
 
         switch (level) {
-            case BRONZE:
+            case bronzeLevel:
             textHeaderElement.textContent = 'Поздравляем!';
             modalTextElement.textContent = 'Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?';
             modalImage.src = 'pic/level1_prize_cat.png';  
-            prizeDiscounteLevel = BRONZE;              
+            prizeDiscounteLevel = bronzeLevel;              
                 break;           
-            case SILVER:            
+            case silverLevel:            
             textHeaderElement.textContent = 'Вау!';
             modalTextElement.textContent = 'Вторая несгораемая сумма – это круто! Но игра еще не окончена. Продолжаешь бороться за главный приз или заберешь награду?';                
             modalImage.src = 'pic/level2_prize_cat.png';
-            prizeDiscounteLevel = SILVER;              
+            prizeDiscounteLevel = silverLevel;              
                 break;
-            case GOLD:                            
+            case goldLevel:                            
             document.getElementById('modal-footer-bronze-silver').style.display = 'none';
             document.querySelector('.modal-footer-gold').classList.remove('hidden');
 
             textHeaderElement.textContent = 'Победа!';
             modalTextElement.textContent = 'Ты ответил на все вопросы и выиграл 300 баллов! Перед тобой преклоняются все гуру пикников, повелители дач и грозы субботников ;)';
             modalImage.src = 'pic/level3_prize_cat.png';                    
-            prizeDiscounteLevel = GOLD;              
+            prizeDiscounteLevel = goldLevel;              
                 break;    
         }
 

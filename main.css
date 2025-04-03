@@ -252,8 +252,8 @@ button:hover {
 }
 
 .image-start-screen img {
-    width: 327px;
-    height: 263px;    
+    width: 60%;
+    height: 60%;    
     margin: auto; /* Отцентрируем изображение внутри контейнера */
 }
 
@@ -308,7 +308,7 @@ button:hover {
     margin-right: auto;
     width: 90%; /* Задайте ширину блока, если хотите ограничить его размер */    
     height: 120px;    
-    font-size: 18px;        
+    font-size: 16px;        
     color: #322A22;
     background-color: #EAD0A0;
     border: 2px solid #B18636; /* Добавлен стиль границы */
@@ -324,7 +324,7 @@ button:hover {
     margin-left: auto;
     margin-right: auto;
     width: 90%;   
-    font-size: 18px;
+    font-size: 14px;
     color: #322A22;        
     padding: 5px;    
     background-color: #EAD0A0;
@@ -339,10 +339,10 @@ button:hover {
 
 .main-screen-body {   
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto;    
     width: 90%;     
     height: 130px;    
-    font-size: 18px;
+    font-size: 18px;    
     color: #322A22;
     background-color: #EAD0A0;
     border: 2px solid #B18636; /* Добавлен стиль границы */
@@ -352,6 +352,50 @@ button:hover {
     text-transform: uppercase;
     text-align: center;
     line-height: 120%;
+}
+
+.ved_timer {
+    display: flex;
+    align-items: center; /* Выравнивание элементов по вертикальной оси */
+    gap: 10px; /* Отступ между элементами (можно настроить по своему усмотрению) */
+}
+
+.timer-image {
+    background-image: url('pic/bg_clock.png'); /* Путь к вашему изображению */
+    width: 100px;
+    height: 70px;    
+    position: relative;
+    text-align: center;
+    background-size: 100% 100%; /* Масштабируем изображение, чтобы оно занимало весь контейнер */
+    background-position: center; /* Центруем изображение */
+    background-repeat: no-repeat; /* Изображение не повторяется */
+}
+
+.timer-text {
+    color: black;
+    font-size: 32px;
+    font-family: 'Pusia', Arial, sans-serif;    
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bg_little {
+    display: flex;
+    background-image: url('pic/bg_question_little.png'); /* Путь к вашему изображению */
+    width: 82%;
+    height: 64px;    
+    position: absolute;
+    top: 28%;
+    left: 50%;
+    z-index: 1000;    
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-size: 100% 100%; /* Масштабируем изображение, чтобы оно занимало весь контейнер */
+    background-position: center; /* Центруем изображение */
+    background-repeat: no-repeat; /* Изображение не повторяется */
 }
 
 .modal-footer {
@@ -415,10 +459,10 @@ button:hover {
 
 .btn-modal-dialog-continue {
     margin-top: 30px;
-    width: 181px;
+    width: 171px;
     height: 64px;
     border: 2px solid #2B2A29; /* Добавлен стиль границы */
-    border-radius: 50px;
+    border-radius: 24px;
     background-color: #517709;
     font-size: 18px;
     font-family: 'Pusia', Arial, sans-serif;    
@@ -428,11 +472,13 @@ button:hover {
 
 .btn-modal-dialog-take-prize {
     display: flex; /* Активируем Flexbox */
+    justify-content: center;     
     margin-top: 30px;
     width: 140px;
     height: 64px;
+    gap: 10px;
     border: 2px solid #2B2A29; /* Добавлен стиль границы */
-    border-radius: 50px;
+    border-radius: 24px;
     background-color: #F04F23;
     font-size: 18px;
     font-family: 'Pusia', Arial, sans-serif;    
@@ -448,7 +494,7 @@ button:hover {
     width: 294px;
     height: 64px;
     border: 2px solid #2B2A29; /* Добавлен стиль границы */
-    border-radius: 50px;
+    border-radius: 24px;
     background-color: #F04F23;
     font-size: 18px;
     font-family: 'Pusia', Arial, sans-serif;    
@@ -540,30 +586,7 @@ button:hover {
 }
 
 
-.ved_timer {
-    display: flex;
-    align-items: center; /* Выравнивание элементов по вертикальной оси */
-    gap: 10px; /* Отступ между элементами (можно настроить по своему усмотрению) */
-}
 
-.timer-image {
-    background-image: url('pic/time_bg.png'); /* Путь к вашему изображению */
-    width: 100px;
-    height: 70px;    
-    position: relative;
-    text-align: center;
-}
-
-.timer-text {
-    color: black;
-    font-size: 32px;
-    font-family: 'Pusia', Arial, sans-serif;    
-    text-transform: uppercase;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 
 
 

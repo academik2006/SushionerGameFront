@@ -49,7 +49,13 @@
             <img src="pic/little_cat_rules.png" alt="rules_screen_cat_pic">
         </div>               
         <div class="rules-screen-body">
-            <p>Игрок должен ответить на вопросы о весне, труде, шашлыках, пикниках и прочих радостях Первомая. За каждый правильный ответ – бонусные баллы в копилку. Но это еще не всё! После 4 и 8 вопросов игрока ждёт «несгораемая сумма» – можно забрать заработанное и гордо уйти, или рискнуть и дойти до конца викторины. Везунчик, который верно ответит на 10 вопрос, станет обладателем главного приза – 300 бонусных баллов от Суши Мастер!</p>
+            <p>
+                Игрок должен ответить на вопросы о весне 🌸, труде 🛠️, шашлыках 🍢, пикниках 🏞️ и прочих радостях Первомая 🎉.<br>
+                <br>
+                За каждый правильный ответ – бонусные баллы в копилку. Но это еще не всё! После 4 и 8 вопросов игрока ждёт «несгораемая сумма» 💰 – можно забрать заработанное и гордо уйти, или рискнуть и дойти до конца викторины.<br>
+                <br>
+                Везунчик, который верно ответит на 10 вопрос, станет обладателем главного приза – 300 бонусных баллов от Суши Мастер 🍣🎁!
+            </p>
         </div>        
         <div class="modal-footer" style="margin-top: 20px;">            
             <button id="start-game2" class="button-common">Начать игру</button>      
@@ -68,10 +74,15 @@
             </div>           
         </div>
         
-        <div id="question-text-id" class="main-screen-body">
-            <p>Какой вид картошки?</p>
-        </div>        
-        
+         <div class="bg_little">
+            <div id="question_number_id" style="margin-left: 40px; margin-top: 20px;">4/10</div>
+            <div id="question_prize_id" style="margin-left: 100px; margin-top: 20px;">80 БАЛЛОВ</div>
+        </div>
+                
+        <div  class="main-screen-body"> 
+            <div id="question-text-id" style="margin-top: 50px;">текст вопроса</div>
+        </div>    
+                
         <div class="hints">
             <button class="btn-main-screen-hint" data-hint="5050">
                 <img src="pic/50.png" alt="50_50_pic">
@@ -90,10 +101,9 @@
         <div class="game">                        
             <div class="question-container">                
                 <div class="answers"></div>
-            </div>
-           
+            </div>           
             <p class="result"></p>
-        </div>                 
+        </div>                        
     </div>
 </div>
 
@@ -110,7 +120,7 @@
         </div>
         <div id = "modal-footer-bronze-silver" class="modal-footer">
             <button type="button" id="btn-modal-dialog-take-prize-bronze-silver" class="btn-modal-dialog-take-prize">
-                <img src="pic/gift.png" alt="Icon" class="icon" style="width: 40px; height: 40px;">
+                <img src="pic/gift.png" alt="Icon" class="icon" style="width: 40px; height: 40px; margin-top: 10px;">
                 <div class="btn-modal-dialog-take-prize-text">Приз</div>
             </button>           
             <button id="continue-game-btn" class="btn-modal-dialog-continue">Продолжить</button>
@@ -280,7 +290,8 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
 
         const question = questions[currentQuestionIndex];
         document.getElementById('question-text-id').textContent = question.question;
-        //document.querySelector('.question').textContent = question.question;
+        document.getElementById('question_number_id').textContent = `${currentQuestionIndex + 1} / 10`;
+        document.getElementById('question_prize_id').textContent = `${(currentQuestionIndex + 1)*20} БАЛЛОВ`;        
         document.querySelector('.answers').innerHTML = '';
 
         question.answers.forEach(answer => {
@@ -401,7 +412,8 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
             case goldLevel:                            
             document.getElementById('modal-footer-bronze-silver').style.display = 'none';
             document.querySelector('.modal-footer-gold').classList.remove('hidden');
-
+            document.querySelector('.modal-footer-gold').style.display = 'flex';
+            document.querySelector('.modal-footer-gold').style.justifyContent = 'center';
             textHeaderElement.textContent = 'Победа!';
             modalTextElement.textContent = 'Ты ответил на все вопросы и выиграл 300 баллов! Перед тобой преклоняются все гуру пикников, повелители дач и грозы субботников ;)';
             modalImage.src = 'pic/level3_prize_cat.png';                    

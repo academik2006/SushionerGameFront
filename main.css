@@ -275,8 +275,8 @@ button:hover {
 }
 
 .image-main-screen-cat img {
-    width: 234px;
-    height: 184px;    
+    width: 90%;
+    height: 90%;    
     margin: auto; /* Отцентрируем изображение внутри контейнера */
 }
 
@@ -388,7 +388,7 @@ button:hover {
     width: 82%;
     height: 64px;    
     position: absolute;
-    top: 28%;
+    top: 26%;
     left: 50%;
     z-index: 1000;    
     transform: translate(-50%, -50%);

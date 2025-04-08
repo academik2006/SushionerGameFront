@@ -253,7 +253,7 @@
 
 <script>
 
-let currentQuestionIndex = 0;
+let currentQuestion = 0;
 let hintsUsed = [];
 let totalPrize = 0;
 let isMusicPlay = true;
@@ -270,6 +270,9 @@ const PRIZE_ONE_QUESTION = 20;
 const QUESTION_ALL = 10;
 let audioMain = document.getElementById("audioMain");
 let audioWin = document.getElementById("audioWin");
+let availableQuestionsLight = [...questions_light];
+let availableQuestionsHard = [...questions_hard];
+let question = null;
 
 document.getElementById('start-game').addEventListener('click', startGame);
 document.getElementById('start-game2').addEventListener('click', startGame);
@@ -344,11 +347,10 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
 
 
     function nextQuestion() {        
-        
-        //document.getElementById('current-question-text').textContent = 'Номер вопроса: '+ (currentQuestionIndex+1);        
+                
         resetTimerForNextQuestion();  
         
-        switch (currentQuestionIndex) {
+        switch (currentQuestion) {
             case 4:
                 showModalDialog(bronzeLevel);                
                 break;           
@@ -357,18 +359,25 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
                 break;             
         }
 
-        if (currentQuestionIndex >= QUESTION_ALL) {            
+        if (currentQuestion >= QUESTION_ALL) {            
             showFinalScreen(true);
             return;
         }
 
-        startTimer()
         
+        if (currentQuestion + 1 === QUESTION_ALL) {
+        question = getRandomQuestion(availableQuestionsHard);
+        document.getElementById('question_prize_id').textContent = `300 БАЛЛОВ`;        
+        } else {
+        question = getRandomQuestion(availableQuestionsLight);
+        document.getElementById('question_prize_id').textContent = `${(currentQuestion + 1)*PRIZE_ONE_QUESTION} БАЛЛОВ`;        
+        }
 
-        const question = questions_light[currentQuestionIndex];
+        startTimer()               
+        
         document.getElementById('question-text-id').textContent = question.question;
-        document.getElementById('question_number_id').textContent = `${currentQuestionIndex + 1} / 10`;
-        document.getElementById('question_prize_id').textContent = `${(currentQuestionIndex + 1)*PRIZE_ONE_QUESTION} БАЛЛОВ`;        
+        document.getElementById('question_number_id').textContent = `${currentQuestion + 1} / 10`;
+        
         document.querySelector('.answers').innerHTML = '';
 
         question.answers.forEach(answer => {
@@ -382,13 +391,19 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
         document.querySelector('.result').textContent = '';
     }
 
+    function getRandomQuestion(availableQuestions) {
+    const index = Math.floor(Math.random() * availableQuestions.length);
+    const question = availableQuestions[index]; // Получаем вопрос по этому индексу    
+    availableQuestions.splice(index, 1);
+    return question;
+    }
+
     function checkAnswer(answer) {
-        const question = questions_light[currentQuestionIndex];
         if (answer === question.correctAnswer) {
             document.querySelector('.result').textContent = 'Правильно!';
             document.querySelector('.result').style.color = 'green';
-            totalPrize += PRIZE_ONE_QUESTION*(currentQuestionIndex+1);
-            currentQuestionIndex++;
+            totalPrize += PRIZE_ONE_QUESTION*(currentQuestion+1);
+            currentQuestion++;
             setTimeout(nextQuestion, 1000);
         } else {
             document.querySelector('.result').textContent = 'Неправильно! Игра окончена.';
@@ -414,13 +429,12 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
                 showMisterSuHint();                
                 break;           
             case '5050':
-                removeTwoWrongAnswers();
+                removeTwoWrongAnswers(question);
                 break;            
         }
     }
 
-    function removeTwoWrongAnswers() {
-        const question = questions_light[currentQuestionIndex];
+    function removeTwoWrongAnswers(question) {        
         const wrongAnswers = question.answers.filter(answer => answer !== question.correctAnswer);
         const randomIndexes = Array.from({length: wrongAnswers.length}, (_, i) => i).sort(() => Math.random() - 0.5).slice(0, 2);
 
@@ -429,8 +443,7 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
                 const buttons = document.querySelectorAll('.answer-button');
                 buttons.forEach(button => {
                     if (button.textContent === wrongAnswer) {
-                        button.style.display = 'none';
-                        //button.style.opacity = 0.5;
+                        button.style.display = 'none';                        
                     }
                 });
             }
@@ -511,7 +524,7 @@ function showMisterSuHint() {
 }
 
 function getCurrentQuestionListForMisterSu() {
-    let correctAnswer = questions[currentQuestionIndex].correctAnswer
+    let correctAnswer = question.correctAnswer
 
     return friendHints = [
     'Хм... Интересный вопрос. Мой внутренний компас указывает на ' + correctAnswer + ', но... вдруг это ловушка? В общем, решай сам, я лишь скромный наблюдатель за звёздным небом.',

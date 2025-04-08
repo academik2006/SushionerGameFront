@@ -387,8 +387,7 @@ button:hover {
     font-weight: bold;
     background-color: #EAD0A0;
     border: 2px solid #B18636; /* Добавлен стиль границы */
-    border-radius: 16px;
-    letter-spacing: 2px;
+    border-radius: 16px;    
     font-family: 'Commissioner', Arial, sans-serif;        
     text-align: center;
     line-height: 120%;

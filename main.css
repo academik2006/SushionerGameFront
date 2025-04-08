@@ -1,5 +1,5 @@
 
-@font-face {
+@font-face {    
     font-family: 'Pusia'; 
     src: url('fonts/pusia_bold.otf') format('truetype') 
 }
@@ -57,6 +57,20 @@ body {
             background-position: center; /* Центруем изображение */
             background-repeat: no-repeat; /* Изображение не повторяется */
         }        
+
+.game_stage_screen {
+            display: none; /* Скрываем диалог по умолчанию */            
+            width: 375px; 
+            height: 734px;  
+            z-index: 1000;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+            background-image: url('pic/bg_blue.jpg'); /* Путь к изображению */
+            background-size: 100% 100%; /* Масштабируем изображение, чтобы оно занимало весь контейнер */
+            background-position: center; /* Центруем изображение */
+            background-repeat: no-repeat; /* Изображение не повторяется */
+        }                
 h1 {
             color: #333;
             margin-bottom: 20px;
@@ -66,10 +80,9 @@ button {
             height: 64px;
             border: 2px solid #2B2A29; /* Добавлен стиль границы */
             border-radius: 24px;
-            font-size: 18px;
+            font-size: 14px;
             font-family: 'Commissioner', Arial, sans-serif;    
-            color: #FEFEFE;
-            text-transform: uppercase;
+            color: #FEFEFE;            
             letter-spacing: 2px;
             background-color: #45a049;
             cursor: pointer;
@@ -117,11 +130,9 @@ button:hover {
         height: 64px;
         border: 2px solid #2B2A29; /* Добавлен стиль границы */
         border-radius: 24px;
-        font-size: 18px;
+        font-size: 14px;
         font-family: 'Commissioner', Arial, sans-serif;    
-        color: #FEFEFE;
-        text-transform: uppercase;
-        letter-spacing: 2px;
+        color: #FEFEFE;                
         background-color: #45a049;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
@@ -129,6 +140,29 @@ button:hover {
 .answer-button:hover {
             background-color: #F04F23;
         }
+
+.question-list-item {            
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        width: 327px;
+        height: 48px;        
+        position: relative;
+        border: 2px solid #2B2A29; /* Добавлен стиль границы */
+        border-radius: 16px;
+        font-size: 18px;
+        font-family: 'Commissioner', Arial, sans-serif;    
+        color: #FEFEFE;        
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background-color: #45a049; 
+        }  
+
+.question-list-item.fireproof {        
+        background-color: #C98F22;            
+        }             
+
 .result {
             margin-top: 20px;
             font-size: 16px;
@@ -208,6 +242,7 @@ button:hover {
     margin-top: 0;
     font-size: 42px;
     color: #2B2A29;
+    line-height: 1;
     font-weight: bold;
     font-family: 'Commissioner', Arial, sans-serif;    
     text-transform: uppercase;
@@ -310,9 +345,10 @@ button:hover {
 .start-screen-body {   
     margin-left: auto;
     margin-right: auto;
-    width: 90%; /* Задайте ширину блока, если хотите ограничить его размер */    
+    width: 90%; 
     height: 120px;    
     font-size: 16px;        
+    font-weight: bold;
     color: #322A22;
     background-color: #EAD0A0;
     border: 2px solid #B18636; /* Добавлен стиль границы */
@@ -348,12 +384,12 @@ button:hover {
     height: 130px;    
     font-size: 18px;    
     color: #322A22;
+    font-weight: bold;
     background-color: #EAD0A0;
     border: 2px solid #B18636; /* Добавлен стиль границы */
     border-radius: 16px;
     letter-spacing: 2px;
-    font-family: 'Commissioner', Arial, sans-serif;    
-    text-transform: uppercase;
+    font-family: 'Commissioner', Arial, sans-serif;        
     text-align: center;
     line-height: 120%;
 }
@@ -438,7 +474,7 @@ button:hover {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-    background-image: url('pic/yellow_bg.jpg'); /* Путь к изображению */
+    background-image: url('pic/bg_red.png'); /* Путь к изображению */
     background-size: 100% 100%; /* Масштабируем изображение, чтобы оно занимало весь контейнер */
     background-position: center; /* Центруем изображение */
     background-repeat: no-repeat; /* Изображение не повторяется */
@@ -523,7 +559,7 @@ button:hover {
     width: 327px;
     height: 64px;
     border: 2px solid #2B2A29; /* Добавлен стиль границы */
-    border-radius: 50px;
+    border-radius: 24px;
     background-color: #2E9699;
     font-size: 18px;
     font-family: 'Commissioner', Arial, sans-serif;    
@@ -536,8 +572,8 @@ button:hover {
     width: 327px;
     height: 64px;
     border: 2px solid #2B2A29; /* Добавлен стиль границы */
-    border-radius: 50px;
-    background-color: #C98F22;
+    border-radius: 24px;
+    background-color: #F04F23;
     font-size: 18px;
     font-family: 'Commissioner', Arial, sans-serif;    
     text-transform: uppercase;
@@ -570,7 +606,7 @@ button:hover {
     border-radius: 24px;
     gap: 10;
     cursor: pointer; /* Указатель мыши становится рукой при наведении */
-    background-color: red; /* Прозрачность фона кнопки */
+    background-color: #F04F23; /* Прозрачность фона кнопки */
     display: flex; /* Размещаем изображение по центру */
     align-items: center;
     justify-content: center;

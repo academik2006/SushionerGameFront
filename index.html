@@ -107,6 +107,82 @@
     </div>
 </div>
 
+<div id = "game_stage_screen_id" class="game_stage_screen">
+    <div>
+        <div class="modal-footer">
+            <div class="question-list-item">
+                <div style="margin-left: 40px; margin-top: 12px;">1</div>
+                <div style="margin-left: 100px; margin-top: 12px;">20 БАЛЛОВ</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="question-list-item">
+                <div style="margin-left: 40px; margin-top: 12px;">2</div>
+                <div style="margin-left: 100px; margin-top: 12px;">40 БАЛЛОВ</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="question-list-item">
+                <div style="margin-left: 40px; margin-top: 12px;">3</div>
+                <div style="margin-left: 100px; margin-top: 12px;">60 БАЛЛОВ</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="question-list-item fireproof">
+                <div style="margin-left: 40px; margin-top: 12px;">4</div>
+                <img src="pic/gift.png" alt="Icon" class="icon" style="margin-left: 10px; width: 30px; height: 30px; margin-top: 8px;">
+                <div style="margin-left: 10px; margin-top: 12px;">80 БАЛЛОВ</div>
+                <img src="pic/gift.png" alt="Icon" class="icon" style="margin-left: 10px; width: 30px; height: 30px; margin-top: 8px;">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="question-list-item">
+                <div style="margin-left: 40px; margin-top: 12px;">5</div>
+                <div style="margin-left: 100px; margin-top: 12px;">100 БАЛЛОВ</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="question-list-item">
+                <div style="margin-left: 40px; margin-top: 12px;">6</div>
+                <div style="margin-left: 100px; margin-top: 12px;">120 БАЛЛОВ</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="question-list-item">
+                <div style="margin-left: 40px; margin-top: 12px;">7</div>
+                <div style="margin-left: 100px; margin-top: 12px;">140 БАЛЛОВ</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="question-list-item fireproof">
+                <div style="margin-left: 40px; margin-top: 12px;">8</div>
+                <img src="pic/gift.png" alt="Icon" class="icon" style="margin-left: 10px; width: 30px; height: 30px; margin-top: 8px;">
+                <div style="margin-left: 10px; margin-top: 12px;">160 БАЛЛОВ</div>
+                <img src="pic/gift.png" alt="Icon" class="icon" style="margin-left: 10px; width: 30px; height: 30px; margin-top: 8px;">
+            </div>
+        </div>
+       
+        <div class="modal-footer">
+            <div class="question-list-item">
+                <div style="margin-left: 40px; margin-top: 12px;">9</div>
+                <div style="margin-left: 100px; margin-top: 12px;">180 БАЛЛОВ</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="question-list-item fireproof">
+                <div style="margin-left: 40px; margin-top: 12px;">10</div>
+                <img src="pic/gift.png" alt="Icon" class="icon" style="margin-left: 10px; width: 30px; height: 30px; margin-top: 8px;">
+                <div style="margin-left: 10px; margin-top: 12px;">300 БАЛЛОВ</div>
+                <img src="pic/gift.png" alt="Icon" class="icon" style="margin-left: 10px; width: 30px; height: 30px; margin-top: 8px;">
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">            
+        <button id="return-game-button2" class="btn-modal-dialog">Вернуться к игре</button>            
+    </div>
+</div>
+
 <div id="сongratulations-dialogue" class="modal-dialog">
     <div class="modal-content">
         <div class="modal-image">            
@@ -188,10 +264,10 @@ const silverLevel = "SILVER";
 const bronzeLevel = "BRONZE";
 
 
-
-
 let timerInterval = null;
 const SECONDS_FOR_ONE_QUESTION = 30;
+const PRIZE_ONE_QUESTION = 20;
+const QUESTION_ALL = 10;
 let audioMain = document.getElementById("audioMain");
 let audioWin = document.getElementById("audioWin");
 
@@ -216,6 +292,7 @@ document.getElementById("btn-modal-dialog-take-prize-gold").addEventListener("cl
     claimPrize(); // Забирание приза
 });
 document.getElementById("return-game-button").addEventListener("click", continueGame);
+document.getElementById("return-game-button2").addEventListener("click", continueGame);
 
 document.getElementById("exit-game-lose").addEventListener("click", function () {
     //тут нужно закрывать игру с призом NONE
@@ -280,7 +357,7 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
                 break;             
         }
 
-        if (currentQuestionIndex >= questions.length) {            
+        if (currentQuestionIndex >= QUESTION_ALL) {            
             showFinalScreen(true);
             return;
         }
@@ -288,10 +365,10 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
         startTimer()
         
 
-        const question = questions[currentQuestionIndex];
+        const question = questions_light[currentQuestionIndex];
         document.getElementById('question-text-id').textContent = question.question;
         document.getElementById('question_number_id').textContent = `${currentQuestionIndex + 1} / 10`;
-        document.getElementById('question_prize_id').textContent = `${(currentQuestionIndex + 1)*20} БАЛЛОВ`;        
+        document.getElementById('question_prize_id').textContent = `${(currentQuestionIndex + 1)*PRIZE_ONE_QUESTION} БАЛЛОВ`;        
         document.querySelector('.answers').innerHTML = '';
 
         question.answers.forEach(answer => {
@@ -306,11 +383,11 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
     }
 
     function checkAnswer(answer) {
-        const question = questions[currentQuestionIndex];
+        const question = questions_light[currentQuestionIndex];
         if (answer === question.correctAnswer) {
             document.querySelector('.result').textContent = 'Правильно!';
             document.querySelector('.result').style.color = 'green';
-            totalPrize += question.prize;
+            totalPrize += PRIZE_ONE_QUESTION*(currentQuestionIndex+1);
             currentQuestionIndex++;
             setTimeout(nextQuestion, 1000);
         } else {
@@ -343,7 +420,7 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
     }
 
     function removeTwoWrongAnswers() {
-        const question = questions[currentQuestionIndex];
+        const question = questions_light[currentQuestionIndex];
         const wrongAnswers = question.answers.filter(answer => answer !== question.correctAnswer);
         const randomIndexes = Array.from({length: wrongAnswers.length}, (_, i) => i).sort(() => Math.random() - 0.5).slice(0, 2);
 
@@ -361,7 +438,7 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
     }
 
     function showResultScreen() {
-
+        document.getElementById("game_stage_screen_id").style.display = "block";
     }
 
     function switchMusic() {
@@ -456,6 +533,7 @@ function getCurrentQuestionListForMisterSu() {
     document.getElementById('сongratulations-dialogue').style.display = "none";
     document.getElementById('mistersuhint').style.display = "none";
     document.getElementById('losegame').style.display = "none";
+    document.getElementById('game_stage_screen_id').style.display = "none";
     document.getElementById("main_questions_screen_id").style.display = "block";
     }
 
@@ -465,10 +543,8 @@ function getCurrentQuestionListForMisterSu() {
     }
 
 // Функция забрания приза
-    function claimPrize() {
-    console.log("Приз получен!");
-    showFinalScreen(true)
-    // Здесь добавляется логика получения приза
+    function claimPrize() {    
+    showFinalScreen(true)    
     }   
    
 </script>
@@ -476,15 +552,15 @@ function getCurrentQuestionListForMisterSu() {
 <script>
     let tg = window.Telegram.WebApp; //получаем объект webapp телеграма 
     tg.expand(); //расширяем на все окно   
-    
-    document.getElementById('btn-modal-dialog-take-prize-bronze-silver').addEventListener('click', function(){ //вешаем событие на нажатие html-кнопки
-        tg.sendData(prizeDiscounteLevel);      
-    });   
 
-    document.getElementById('btn-modal-dialog-take-prize-gold').addEventListener('click', function(){ //вешаем событие на нажатие html-кнопки
-       tg.sendData(prizeDiscounteLevel);      
-       
-    });  
+    const sendPrizeData = () => {
+    tg.sendData(prizeDiscountLevel);
+    };
+
+
+    document.getElementById('exit-game-lose').addEventListener('click', sendPrizeData);
+    document.getElementById('btn-modal-dialog-take-prize-bronze-silver').addEventListener('click', sendPrizeData);
+    document.getElementById('btn-modal-dialog-take-prize-gold').addEventListener('click', sendPrizeData);
  </script>
 </body>
 </html>

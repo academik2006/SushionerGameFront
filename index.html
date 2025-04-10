@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -5,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Большая Первомайская викторина от Суши Мастер</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script> 
-    <link rel="stylesheet" href="main.css" />
-    <script src="questions.js"></script>    
+    <link rel="stylesheet" href="main.css" />    
+    <script src="questions.js"></script>        
 </head>
 <body>
 
@@ -17,6 +18,11 @@
 
 <audio loop id="audioWin">
     <source src="music/win.mp3" type="audio/mpeg">    
+    Проигрывание музыки не поддерживается.
+</audio>
+
+<audio loop id="audioTenQuestion">
+    <source src="music/239084_10_question.mp3" type="audio/mpeg">    
     Проигрывание музыки не поддерживается.
 </audio>
 
@@ -252,7 +258,6 @@
 </div>
 
 <script>
-
 let currentQuestion = 0;
 let hintsUsed = [];
 let totalPrize = 0;
@@ -270,8 +275,9 @@ const PRIZE_ONE_QUESTION = 20;
 const QUESTION_ALL = 10;
 let audioMain = document.getElementById("audioMain");
 let audioWin = document.getElementById("audioWin");
-let availableQuestionsLight = [...questions_light];
-let availableQuestionsHard = [...questions_hard];
+let audioTenQuestion = document.getElementById("audioTenQuestion");
+let availableQuestionsLight = questions_light;
+let availableQuestionsHard = questions_hard;
 let question = null;
 
 document.getElementById('start-game').addEventListener('click', startGame);
@@ -312,6 +318,7 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
         document.getElementById('rules-screen-id').style.display = "none";                
         audioMain.volume = 0.2;
         audioWin.volume = 0.2;
+        audioTenQuestion.volume = 0.2;
         audioMain.play();       
         nextQuestion();
     }
@@ -321,6 +328,7 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
         document.getElementById('start-screen-id').style.display = "none";        
         audioMain.volume = 0.2;
         audioWin.volume = 0.2;
+        audioTenQuestion.volume = 0.2;
         audioMain.play();               
     }
 
@@ -366,6 +374,8 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
 
         
         if (currentQuestion + 1 === QUESTION_ALL) {
+        audioMain.pause()
+        audioTenQuestion.play()    
         question = getRandomQuestion(availableQuestionsHard);
         document.getElementById('question_prize_id').textContent = `300 БАЛЛОВ`;        
         } else {
@@ -468,7 +478,8 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
     }
 
     function showFinalScreen(isWin) {
-        audioMain.pause()                        
+        audioMain.pause()  
+        audioTenQuestion.pause()                      
         if(isWin) {            
             audioWin.play()
             showModalDialog(goldLevel);

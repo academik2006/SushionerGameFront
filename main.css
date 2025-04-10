@@ -74,24 +74,7 @@ body {
 h1 {
             color: #333;
             margin-bottom: 20px;
-        }
-button {            
-            width: 327px;
-            height: 64px;
-            border: 2px solid #2B2A29; /* Добавлен стиль границы */
-            border-radius: 24px;
-            font-size: 14px;
-            font-family: 'Commissioner', Arial, sans-serif;    
-            color: #FEFEFE;            
-            letter-spacing: 2px;
-            background-color: #45a049;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-        }
-button:hover {
-            transform: scale(1.05); /* Увеличение кнопки при наведении */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* Добавление тени */
-        }             
+        }         
 
 .button-common {
             width: 327px;
@@ -101,8 +84,7 @@ button:hover {
             font-size: 18px;
             font-family: 'Commissioner', Arial, sans-serif;    
             color: #FEFEFE;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            text-transform: uppercase;            
             background-color: #45a049;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
@@ -138,7 +120,9 @@ button:hover {
         transition: all 0.3s ease-in-out;
         }
 .answer-button:hover {
-            background-color: #F04F23;
+        background-color: #C98F22;            
+        transform: scale(1.05); /* Увеличение кнопки при наведении */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* Добавление тени */
         }
 
 .question-list-item {            
@@ -239,7 +223,7 @@ button:hover {
 }
 
 .modal-title {
-    margin-top: 0;
+    margin-top: 20px;
     font-size: 42px;
     color: #2B2A29;
     line-height: 1;
@@ -267,8 +251,8 @@ button:hover {
 }
 
 .modal-image img {
-    width: 256px;
-    height: 256px;    
+    width: 60%;
+    height: 60%;    
     margin: auto; /* Отцентрируем изображение внутри контейнера */
 }
 
@@ -279,8 +263,8 @@ button:hover {
 }
 
 .modal-image-lose img {
-    width: 198px;
-    height: 250px;    
+    width: 148px;
+    height: 200px;    
     margin: auto; /* Отцентрируем изображение внутри контейнера */
 }
 
@@ -311,11 +295,12 @@ button:hover {
     display: flex;    
     justify-content: center;        
     margin-left: 20px;
+    margin-top: 30px;
 }
 
 .image-main-screen-cat img {
-    width: 90%;
-    height: 90%;    
+    width: 80%;
+    height: 80%;    
     margin: auto; /* Отцентрируем изображение внутри контейнера */
 }
 
@@ -333,11 +318,9 @@ button:hover {
 
 .modal-body {
     margin-top: 10px;
-    font-size: 18px;
+    font-size: 24px;
     color: #FEFEFE;
-    letter-spacing: 2px;
-    font-family: 'Commissioner', Arial, sans-serif;    
-    text-transform: uppercase;
+    font-family: 'Commissioner', Arial, sans-serif;        
     text-align: center;
     line-height: 120%;
 }
@@ -347,15 +330,15 @@ button:hover {
     margin-right: auto;
     width: 90%; 
     height: 120px;    
-    font-size: 16px;        
-    font-weight: bold;
+    font-size: 16px;            
     color: #322A22;
+    font-weight: bold;
+    text-transform: uppercase;    
+    padding: 5px;
     background-color: #EAD0A0;
     border: 2px solid #B18636; /* Добавлен стиль границы */
-    border-radius: 16px;
-    letter-spacing: 2px;
-    font-family: 'Commissioner', Arial, sans-serif;    
-    text-transform: uppercase;
+    border-radius: 16px;    
+    font-family: 'Commissioner', Arial, sans-serif;        
     text-align: center;
     line-height: 120%;
 }
@@ -364,15 +347,13 @@ button:hover {
     margin-left: auto;
     margin-right: auto;
     width: 90%;   
-    font-size: 14px;
+    font-size: 16px;
     color: #322A22;        
     padding: 5px;    
     background-color: #EAD0A0;
     border: 2px solid #B18636; /* Добавлен стиль границы */
-    border-radius: 16px;
-    letter-spacing: 2px;
-    font-family: 'Commissioner', Arial, sans-serif;    
-    text-transform: uppercase;
+    border-radius: 16px;    
+    font-family: 'Commissioner', Arial, sans-serif;        
     text-align: center;
     line-height: 120%;
 }
@@ -461,6 +442,22 @@ button:hover {
     background-repeat: no-repeat; /* Изображение не повторяется */
 }
 
+.mistersu-hint-body {   
+    margin-left: auto;
+    margin-right: auto;    
+    width: auto;     
+    height: auto;  
+    padding: 10px;  
+    font-size: 18px;    
+    color: #322A22;    
+    background-color: #EAD0A0;
+    border: 2px solid #B18636; /* Добавлен стиль границы */
+    border-radius: 16px;    
+    font-family: 'Commissioner', Arial, sans-serif;        
+    text-align: center;
+    line-height: 120%;
+}
+
 .lose-game-dialog {
     display: none;
     position: fixed;
@@ -473,7 +470,7 @@ button:hover {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-    background-image: url('pic/bg_red.png'); /* Путь к изображению */
+    background-image: url('pic/bg_blue.jpg'); /* Путь к изображению */
     background-size: 100% 100%; /* Масштабируем изображение, чтобы оно занимало весь контейнер */
     background-position: center; /* Центруем изображение */
     background-repeat: no-repeat; /* Изображение не повторяется */
@@ -503,6 +500,7 @@ button:hover {
     border: 2px solid #2B2A29; /* Добавлен стиль границы */
     border-radius: 24px;
     background-color: #517709;
+    color: white;
     font-size: 18px;
     font-family: 'Commissioner', Arial, sans-serif;    
     text-transform: uppercase;
@@ -560,6 +558,7 @@ button:hover {
     border: 2px solid #2B2A29; /* Добавлен стиль границы */
     border-radius: 24px;
     background-color: #2E9699;
+    color: white;
     font-size: 18px;
     font-family: 'Commissioner', Arial, sans-serif;    
     text-transform: uppercase;
@@ -572,6 +571,7 @@ button:hover {
     height: 64px;
     border: 2px solid #2B2A29; /* Добавлен стиль границы */
     border-radius: 24px;
+    color: white;
     background-color: #F04F23;
     font-size: 18px;
     font-family: 'Commissioner', Arial, sans-serif;    

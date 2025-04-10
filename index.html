@@ -34,7 +34,7 @@
         <div class="title_28_black">
             <p>Приготовься к интеллектуальному пикнику!</p>
         </div>        
-        <div class="start-screen-body">
+        <div class="mistersu-hint-body">
             <p>Большая Первомайская викторина от Суши Мастер – это настоящий майский марафон знаний.</p>
         </div>
         <div class="modal-footer" style="margin-top: 20px;">            
@@ -107,8 +107,7 @@
         <div class="game">                        
             <div class="question-container">                
                 <div class="answers"></div>
-            </div>           
-            <p class="result"></p>
+            </div>                       
         </div>                        
     </div>
 </div>
@@ -197,7 +196,7 @@
         <div id="modal-header-id" class="modal-title">
             <p>Поздравлем!</p>
         </div>
-        <div id='modal-text' class="modal-body">
+        <div id='modal-text' class="mistersu-hint-body">
             <p> Ты достиг первой несгораемой суммы баллов! Хочешь продолжить игру и испытать удачу или желаешь забрать свой приз?</p>
         </div>
         <div id = "modal-footer-bronze-silver" class="modal-footer">
@@ -252,7 +251,7 @@
             <img src="pic/leika.png" alt="leika_pic">
         </div>     
         <div class="modal-footer">            
-            <button id="exit-game-lose" class="btn-modal-lose-game-dialog">Попробовать завтра</button>            
+            <button id="exit-game-lose" class="btn-modal-lose-game-dialog">Выход</button>            
         </div>
     </div>
 </div>
@@ -290,14 +289,6 @@ document.getElementById('timer').textContent = SECONDS_FOR_ONE_QUESTION;
 document.getElementById("continue-game-btn").addEventListener("click", function () {
     hideDialog(); // Скрыть диалог
     continueGame(); // Продолжение игры
-});
-document.getElementById("btn-modal-dialog-take-prize-bronze-silver").addEventListener("click", function () {
-    hideDialog(); // Скрыть диалог
-    claimPrize(); // Забирание приза
-});
-document.getElementById("btn-modal-dialog-take-prize-gold").addEventListener("click", function () {
-    hideDialog(); // Скрыть диалог
-    claimPrize(); // Забирание приза
 });
 document.getElementById("return-game-button").addEventListener("click", continueGame);
 document.getElementById("return-game-button2").addEventListener("click", continueGame);
@@ -396,8 +387,7 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
             button.addEventListener('click', () => checkAnswer(answer));
             document.querySelector('.answers').appendChild(button);
         });
-
-        document.querySelector('.result').textContent = '';
+        
     }
 
     function getRandomQuestion(availableQuestions) {
@@ -409,14 +399,10 @@ document.querySelectorAll('.btn-main-screen-hint').forEach(button => {
 
     function checkAnswer(answer) {
         if (answer === question.correctAnswer) {
-            document.querySelector('.result').textContent = 'Правильно!';
-            document.querySelector('.result').style.color = 'green';
             totalPrize += PRIZE_ONE_QUESTION*(currentQuestion+1);
             currentQuestion++;
             setTimeout(nextQuestion, 1000);
-        } else {
-            document.querySelector('.result').textContent = 'Неправильно! Игра окончена.';
-            document.querySelector('.result').style.color = 'red';
+        } else {            
             showFinalScreen(false);
         }
     }

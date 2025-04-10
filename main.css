@@ -145,14 +145,8 @@ h1 {
 
 .question-list-item.fireproof {        
         background-color: #C98F22;            
-        }             
-
-.result {
-            margin-top: 20px;
-            font-size: 16px;
-            color: green;
-            text-align: center;
         }
+
 .hints {
         margin-top: 10px;
         display: flex; /* Включаем Flexbox для контейнера */
@@ -234,7 +228,7 @@ h1 {
 }
 
 .title_28_black {
-    margin-top: 0;
+    margin-top: 20px;
     font-size: 28px;
     line-height: 1;    
     color: #2B2A29;
@@ -325,16 +319,14 @@ h1 {
     line-height: 120%;
 }
 
-.start-screen-body {   
-    margin-left: auto;
-    margin-right: auto;
+.start-screen-body {       
     width: 90%; 
     height: 120px;    
-    font-size: 16px;            
+    font-size: 16px;      
     color: #322A22;
     font-weight: bold;
     text-transform: uppercase;    
-    padding: 5px;
+    padding: 10px;
     background-color: #EAD0A0;
     border: 2px solid #B18636; /* Добавлен стиль границы */
     border-radius: 16px;    
@@ -349,7 +341,7 @@ h1 {
     width: 90%;   
     font-size: 16px;
     color: #322A22;        
-    padding: 5px;    
+    padding: 10px;    
     background-color: #EAD0A0;
     border: 2px solid #B18636; /* Добавлен стиль границы */
     border-radius: 16px;    
@@ -363,7 +355,8 @@ h1 {
     margin-right: auto;    
     width: 90%;     
     height: 130px;    
-    font-size: 18px;    
+    font-size: 18px;  
+    padding: 5px;  
     color: #322A22;
     font-weight: bold;
     background-color: #EAD0A0;
@@ -449,7 +442,8 @@ h1 {
     height: auto;  
     padding: 10px;  
     font-size: 18px;    
-    color: #322A22;    
+    color: #322A22;
+    margin-top: 20px;    
     background-color: #EAD0A0;
     border: 2px solid #B18636; /* Добавлен стиль границы */
     border-radius: 16px;    
@@ -500,11 +494,11 @@ h1 {
     border: 2px solid #2B2A29; /* Добавлен стиль границы */
     border-radius: 24px;
     background-color: #517709;
+    padding: 5px;
     color: white;
     font-size: 18px;
     font-family: 'Commissioner', Arial, sans-serif;    
-    text-transform: uppercase;
-    letter-spacing: 2px;    
+    text-transform: uppercase;    
 }
 
 .btn-modal-dialog-continue:hover {    

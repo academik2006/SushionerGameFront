@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Большая Первомайская викторина от Суши Мастер</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script> 
-    <link rel="stylesheet" href="main.css" />    
+    <link rel="stylesheet" href="main.css" />  
+    <script src="questions.js"></script>    
     <script src="questions.js"></script>        
 </head>
 <body>
@@ -276,8 +277,8 @@ const QUESTION_ALL = 10;
 let audioMain = document.getElementById("audioMain");
 let audioWin = document.getElementById("audioWin");
 let audioTenQuestion = document.getElementById("audioTenQuestion");
-let availableQuestionsLight = questions_light;
-let availableQuestionsHard = questions_hard;
+let availableQuestionsLight = [...questions_light];
+let availableQuestionsHard = [...questions_hard];
 let question = null;
 
 document.getElementById('start-game').addEventListener('click', startGame);

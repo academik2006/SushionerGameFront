@@ -7,7 +7,6 @@
     <title>Большая Первомайская викторина от Суши Мастер</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script> 
     <link rel="stylesheet" href="main.css" />  
-    <script src="questions.js"></script>    
     <script src="questions.js"></script>        
 </head>
 <body>
@@ -268,7 +267,6 @@ let prizeDiscounteLevel = "0";
 const goldLevel = "GOLD";
 const silverLevel = "SILVER";
 const bronzeLevel = "BRONZE";
-
 
 let timerInterval = null;
 const SECONDS_FOR_ONE_QUESTION = 30;
@@ -577,15 +575,19 @@ function getCurrentQuestionListForMisterSu() {
 <script>
     let tg = window.Telegram.WebApp; //получаем объект webapp телеграма 
     tg.expand(); //расширяем на все окно   
+    
+    document.getElementById('exit-game-lose').addEventListener('click', function(){
+      tg.sendData(prizeDiscounteLevel);      
+    });   
 
-    const sendPrizeData = () => {
-    tg.sendData(prizeDiscountLevel);
-    };
+    document.getElementById('btn-modal-dialog-take-prize-bronze-silver').addEventListener('click', function(){
+      tg.sendData(prizeDiscounteLevel);      
+    });   
 
-
-    document.getElementById('exit-game-lose').addEventListener('click', sendPrizeData);
-    document.getElementById('btn-modal-dialog-take-prize-bronze-silver').addEventListener('click', sendPrizeData);
-    document.getElementById('btn-modal-dialog-take-prize-gold').addEventListener('click', sendPrizeData);
+    document.getElementById('btn-modal-dialog-take-prize-gold').addEventListener('click', function(){
+      tg.sendData(prizeDiscounteLevel);      
+    });      
+    
  </script>
 </body>
 </html>
